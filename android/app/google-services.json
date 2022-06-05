@@ -7,7 +7,7 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:604627191517:android:bbf0a33bdf4677d5307d34",
+        "mobilesdk_app_id": "1:604627191517:android:b55dfc0598129c1a307d34",
         "android_client_info": {
           "package_name": "com.azlir.restaurant"
         }
@@ -29,6 +29,13 @@
             {
               "client_id": "604627191517-nm4olr08sbar2pjnti2al4touvcfalau.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "604627191517-b2sq4ie2jrej0jgoih6ioep9vrbigk6v.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.azlir.restaurant"
+              }
             }
           ]
         }

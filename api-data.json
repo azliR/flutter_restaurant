@@ -1,0 +1,97 @@
+{
+    "home": {
+        "nearby_stores": [
+            {
+                "id": "93ab578c-46fa-42f6-b61f-ef13fe13045d",
+                "store_admin_id": "a9a54fca-ec42-40e5-ad1e-f1aaa3b0322f",
+                "name": "Alpha Store",
+                "description": "Alpha Store",
+                "image": "https://www.koalahero.com/wp-content/uploads/2019/10/Makanan-McDonald.jpg",
+                "banner": "https://seeklogo.com/images/M/mcdonald-s-logo-255A7B5646-seeklogo.com.png",
+                "phone": "08123456789",
+                "street_address": "Jalan Raya Kuningan",
+                "postcode": "45595",
+                "latitude": -6.945171261146366,
+                "longitude": 107.70812694679151,
+                "rating": 4.5,
+                "is_active": true,
+                "distance": 1.140462817421805,
+                "city": "Kuningan",
+                "state": "West Java",
+                "country": "Indonesia"
+            }
+        ],
+        "special_offer": [
+            {
+                "id": "7b1c8c31-4a0f-4457-8c71-8f06631aa9ae",
+                "store_id": "93ab578c-46fa-42f6-b61f-ef13fe13045d",
+                "category_id": "00b1347c-0d82-4c1b-adcb-28247d299170",
+                "sub_category_id": "db126848-5a16-4723-bcb1-524695a0d286",
+                "name": "McDonalds Burger",
+                "picture": "https://www.koalahero.com/wp-content/uploads/2019/10/Makanan-McDonald.jpg",
+                "price": 10000,
+                "special_offer": 9000,
+                "description": "McDonalds Burger",
+                "is_active": true
+            }
+        ]
+    },
+    "store": {
+        "get_by_id": {
+            "id": "93ab578c-46fa-42f6-b61f-ef13fe13045d",
+            "store_admin_id": "a9a54fca-ec42-40e5-ad1e-f1aaa3b0322f",
+            "name": "Alpha Store",
+            "description": "Alpha Store",
+            "image": "https://www.koalahero.com/wp-content/uploads/2019/10/Makanan-McDonald.jpg",
+            "banner": "https://seeklogo.com/images/M/mcdonald-s-logo-255A7B5646-seeklogo.com.png",
+            "phone": "08123456789",
+            "street_address": "Jalan Raya Kuningan",
+            "postcode": "45595",
+            "latitude": -6.945171261146366,
+            "longitude": 107.70812694679151,
+            "rating": 4.5,
+            "is_active": true,
+            "city": "Kuningan",
+            "state": "West Java",
+            "country": "Indonesia"
+        }
+    },
+    "item": {
+        "get_by_id": {
+            "id": "7b1c8c31-4a0f-4457-8c71-8f06631aa9ae",
+            "store_id": "93ab578c-46fa-42f6-b61f-ef13fe13045d",
+            "category_id": "00b1347c-0d82-4c1b-adcb-28247d299170",
+            "sub_category_id": "db126848-5a16-4723-bcb1-524695a0d286",
+            "name": "McDonalds Burger",
+            "picture": "https://www.koalahero.com/wp-content/uploads/2019/10/Makanan-McDonald.jpg",
+            "price": 10000.00,
+            "special_offer": 9000.00,
+            "description": "McDonalds Burger",
+            "is_active": true
+        },
+        "get_by_store_id": [
+            {
+                "id": "7b1c8c31-4a0f-4457-8c71-8f06631aa9ae",
+                "store_id": "93ab578c-46fa-42f6-b61f-ef13fe13045d",
+                "category_id": "00b1347c-0d82-4c1b-adcb-28247d299170",
+                "sub_category_id": "db126848-5a16-4723-bcb1-524695a0d286",
+                "name": "McDonalds Burger",
+                "picture": "https://www.koalahero.com/wp-content/uploads/2019/10/Makanan-McDonald.jpg",
+                "price": 10000.00,
+                "special_offer": 9000.00,
+                "description": "McDonalds Burger",
+                "is_active": true
+            }
+        ]
+    },
+    "item_category": {
+        "get_all_categories_have_items": [
+            {
+                "category_id": "00b1347c-0d82-4c1b-adcb-28247d299170",
+                "language_code": "id",
+                "name": "Burgers",
+                "translated_name": "Burger"
+            }
+        ]
+    }
+}

@@ -7,8 +7,8 @@
 
 import 'dart:async';
 import 'dart:developer';
+import 'dart:io';
 
-import 'package:bloc/bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
@@ -16,6 +16,7 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_restaurant/firebase_options.dart';
 import 'package:flutter_restaurant/injection.dart';
 import 'package:flutterfire_ui/auth.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart' as path;
 
@@ -39,12 +40,25 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder, String env) async {
 
   configureInjection(env);
 
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-  FlutterFireUIAuth.configureProviders([
-    const PhoneProviderConfiguration(),
-  ]);
+  if (defaultTargetPlatform == TargetPlatform.android) {
+    AndroidGoogleMapsFlutter.useAndroidViewSurface = true;
+  }
+
+  if (kIsWeb) {
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+    FlutterFireUIAuth.configureProviders([
+      const PhoneProviderConfiguration(),
+    ]);
+  } else if (Platform.isAndroid || Platform.isIOS) {
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+    FlutterFireUIAuth.configureProviders([
+      const PhoneProviderConfiguration(),
+    ]);
+  }
 
   FlutterError.onError = (details) {
     log(details.exceptionAsString(), stackTrace: details.stack);

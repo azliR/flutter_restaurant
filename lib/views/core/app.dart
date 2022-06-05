@@ -5,16 +5,13 @@
 // license that can be found in the LICENSE file or at
 // https://opensource.org/licenses/MIT.
 
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_restaurant/bloc/auth/auth_cubit.dart';
 import 'package:flutter_restaurant/bloc/preferences/preferences_cubit.dart';
 import 'package:flutter_restaurant/injection.dart';
 import 'package:flutter_restaurant/l10n/l10n.dart';
 import 'package:flutter_restaurant/views/core/app_router.dart';
-import 'package:flutter_restaurant/views/core/app_theme.dart';
 import 'package:flutterfire_ui/i10n.dart';
 
 class App extends StatelessWidget {
@@ -33,12 +30,15 @@ class App extends StatelessWidget {
           create: (context) => getIt<AuthCubit>(),
         ),
       ],
-      child: BlocSelector<PreferencesCubit, PreferencesState, Locale>(
+      child: BlocSelector<PreferencesCubit, PreferencesState, Locale?>(
         selector: (state) => state.locale,
         builder: (context, locale) {
           return MaterialApp.router(
-            title: 'CCTV',
-            theme: AppTheme.lightTheme,
+            title: 'Restaurant',
+            theme: ThemeData(
+              useMaterial3: true,
+              colorSchemeSeed: Colors.deepOrange,
+            ),
             locale: locale,
             localizationsDelegates: [
               AppLocalizations.delegate,

@@ -96,7 +96,8 @@ class _PhoneValidationPageState extends State<PhoneValidationPage> {
                             return context.l10n.phoneValidationPhoneEmpty;
                           } else {
                             if (!value.startsWith('08')) {
-                              return context.l10n.phoneValidationPhoneStartsWith;
+                              return context
+                                  .l10n.phoneValidationPhoneStartsWith;
                             } else if (value.length < 10) {
                               return context.l10n.phoneValidationPhoneLength;
                             }
@@ -117,7 +118,7 @@ class _PhoneValidationPageState extends State<PhoneValidationPage> {
                           }
                         },
                         child: Text(
-                            context.l10n.phoneValidationCodeSendCodeButton),
+                            context.l10n.phoneValidationCodeSendCodeButton,),
                       ),
                     ],
                   ),

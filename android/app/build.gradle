@@ -53,7 +53,7 @@ android {
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId "com.azlir.restaurant"
-        minSdkVersion 19
+        minSdkVersion 20
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
@@ -89,17 +89,26 @@ android {
         production {
             dimension "default"
             applicationIdSuffix ""
-            manifestPlaceholders = [appName: "Restaurant"]
+            manifestPlaceholders = [
+                appName: "Restaurant",
+                googleMapApi: "AIzaSyCfIQFNju-sqE_z_Llq9UcmMjpUnBc2U8Y"
+            ]
         }
         staging {
             dimension "default"
             applicationIdSuffix ""
-            manifestPlaceholders = [appName: "[STG] Restaurant"]
-        }        
+            manifestPlaceholders = [
+                appName: "[STG] Restaurant",
+                googleMapApi: "AIzaSyCfIQFNju-sqE_z_Llq9UcmMjpUnBc2U8Y"
+            ]
+        }
         development {
             dimension "default"
             applicationIdSuffix ""
-            manifestPlaceholders = [appName: "[DEV] Restaurant"]
+            manifestPlaceholders = [
+                appName: "[DEV] Restaurant",
+                googleMapApi: "AIzaSyCfIQFNju-sqE_z_Llq9UcmMjpUnBc2U8Y"
+            ]
         }
     }
 
@@ -107,7 +116,6 @@ android {
         release {
             signingConfig signingConfigs.release
             minifyEnabled true
-            useProguard true
             proguardFiles getDefaultProguardFile('proguard-android.txt')
         }
         debug {

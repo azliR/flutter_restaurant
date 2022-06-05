@@ -13,9 +13,9 @@ class AppTheme {
   static const _darkOnPrimaryColor = Colors.black;
   static const _darkOnSecondaryColor = Colors.black;
   static const _darkErrorColor = Color(0xffCF6679);
-  static final _darkCardColor = Color(0xff323230);
-  static final _darkBackgroundColor = Color(0xff1E1E1E);
-  static final _darkAppBarBackgroundColor = _darkBackgroundColor;
+  static const _darkCardColor = Color(0xff323230);
+  static const _darkBackgroundColor = Color(0xff1E1E1E);
+  static const _darkAppBarBackgroundColor = _darkBackgroundColor;
   static final _darkBottomNavBarBackgroundColor = Colors.grey[850]!;
   static const _darkTextColor = Colors.white;
 
@@ -26,7 +26,7 @@ class AppTheme {
   static const _lightErrorColor = Color(0xffB00020);
   static final _lightCardColor = Colors.blue.shade50;
   static const _lightBackgroundColor = Colors.white;
-  static final _lightAppBarBackgroundColor = _lightBackgroundColor;
+  static const _lightAppBarBackgroundColor = _lightBackgroundColor;
   static final _lightBottomNavBarBackgroundColor = _lightCardColor;
   static const _lightTextColor = Colors.black87;
 
@@ -124,19 +124,19 @@ class AppTheme {
 
   static const _dialogTheme = DialogTheme(
     shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(kBorderRadius))),
+        borderRadius: BorderRadius.all(Radius.circular(kBorderRadius)),),
   );
 
   static const _buttonTheme = ButtonThemeData(
     padding: EdgeInsets.symmetric(horizontal: 18, vertical: 12),
     shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(kBorderRadius))),
+        borderRadius: BorderRadius.all(Radius.circular(kBorderRadius)),),
     textTheme: ButtonTextTheme.primary,
   );
 
   static const _popupMenuThemeData = PopupMenuThemeData(
     shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(kBorderRadius))),
+        borderRadius: BorderRadius.all(Radius.circular(kBorderRadius)),),
   );
 
   static ScrollbarThemeData _scrollbarThemeData({
@@ -214,7 +214,7 @@ class AppTheme {
         elevation: 0,
         padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
         shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(kBorderRadius))),
+            borderRadius: BorderRadius.all(Radius.circular(kBorderRadius)),),
       ),
     );
   }
@@ -237,7 +237,7 @@ class AppTheme {
         primary: color,
         padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
         shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(kBorderRadius))),
+            borderRadius: BorderRadius.all(Radius.circular(kBorderRadius)),),
       ).copyWith(
         side: MaterialStateProperty.resolveWith(
           (Set<MaterialState> states) {

@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_restaurant/views/core/app_router.dart';
 
 class SplashPage extends StatefulWidget {
@@ -12,13 +13,11 @@ class SplashPage extends StatefulWidget {
 class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
-    context.router.pushAndPopUntil(
-      PhoneValidationRoute(
-        phoneNumber: phoneNumber,
-        onSuccess: onSuccess,
-      ),
-      predicate: (_) => false,
-    );
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+    Future.delayed(const Duration(seconds: 1), () {
+      context.router
+          .pushAndPopUntil(const HomeRoute(), predicate: (_) => false);
+    });
     super.initState();
   }
 

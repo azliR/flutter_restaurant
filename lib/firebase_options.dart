@@ -17,10 +17,7 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      throw UnsupportedError(
-        'DefaultFirebaseOptions have not been configured for web - '
-        'you can reconfigure this by running the FlutterFire CLI again.',
-      );
+      return web;
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -32,6 +29,16 @@ class DefaultFirebaseOptions {
           'DefaultFirebaseOptions have not been configured for macos - '
           'you can reconfigure this by running the FlutterFire CLI again.',
         );
+      case TargetPlatform.windows:
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for windows - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
+      case TargetPlatform.linux:
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for linux - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       default:
         throw UnsupportedError(
           'DefaultFirebaseOptions are not supported for this platform.',
@@ -39,9 +46,19 @@ class DefaultFirebaseOptions {
     }
   }
 
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyBC1ogdklGgz86CdT6ylaOW4obelcFt7qc',
+    appId: '1:604627191517:web:fb481d0aee9a9b5d307d34',
+    messagingSenderId: '604627191517',
+    projectId: 'restaurant-70076',
+    authDomain: 'restaurant-70076.firebaseapp.com',
+    storageBucket: 'restaurant-70076.appspot.com',
+    measurementId: 'G-ZXJPESWE2Z',
+  );
+
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyCfIQFNju-sqE_z_Llq9UcmMjpUnBc2U8Y',
-    appId: '1:604627191517:android:bbf0a33bdf4677d5307d34',
+    appId: '1:604627191517:android:b55dfc0598129c1a307d34',
     messagingSenderId: '604627191517',
     projectId: 'restaurant-70076',
     storageBucket: 'restaurant-70076.appspot.com',
@@ -49,7 +66,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyDcSknQPOdEM-PKlhYTJ4aJsUia4PXRMgg',
-    appId: '1:604627191517:ios:c2a299bc0edf0050307d34',
+    appId: '1:604627191517:ios:9723c0d56038e745307d34',
     messagingSenderId: '604627191517',
     projectId: 'restaurant-70076',
     storageBucket: 'restaurant-70076.appspot.com',
