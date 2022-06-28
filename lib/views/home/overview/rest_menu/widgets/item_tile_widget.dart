@@ -84,6 +84,9 @@ class ItemTile extends StatelessWidget {
                           padding: EdgeInsets.zero,
                           side: BorderSide.none,
                           backgroundColor: colorScheme.tertiaryContainer,
+                          visualDensity: VisualDensity.compact,
+                          materialTapTargetSize:
+                              MaterialTapTargetSize.shrinkWrap,
                           labelStyle: textTheme.labelSmall?.copyWith(
                             color: colorScheme.onPrimaryContainer,
                           ),

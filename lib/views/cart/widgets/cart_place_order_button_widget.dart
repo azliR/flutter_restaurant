@@ -14,10 +14,8 @@ class CartPlaceOrderButton extends StatelessWidget {
     required BuildContext context,
   }) async {
     final cubit = context.read<CartCubit>();
-    // final token = context.read<AuthCubit>().state.authToken!.token;
 
     await cubit.placeOrder(
-      token: '1c7b3156-986b-487b-8d6c-2db03806ca30',
       onCompleted: (order) async {
         context.read<CartCubit>().clearCart();
 
@@ -42,7 +40,7 @@ class CartPlaceOrderButton extends StatelessWidget {
       case AuthStatus.authorised:
         return showDialog(
           context: context,
-          builder: (context) {
+          builder: (_) {
             return AlertDialog(
               title: const Text('Confirm order?'),
               titleTextStyle: textTheme.headline6?.copyWith(
@@ -99,7 +97,7 @@ class CartPlaceOrderButton extends StatelessWidget {
 
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        padding: const EdgeInsets.all(18),
+        padding: const EdgeInsets.all(16),
         primary: colorScheme.primary,
         onPrimary: colorScheme.onPrimary,
       ),

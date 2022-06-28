@@ -95,7 +95,7 @@ class MapCard extends StatelessWidget {
                                   ),
                                   ElevatedButton(
                                     onPressed: onButtonPressed,
-                                    child: Text('Show'),
+                                    child: const Text('Show'),
                                   ),
                                 ],
                               ),

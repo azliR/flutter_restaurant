@@ -20,7 +20,7 @@ class OrderDetailPage extends StatelessWidget implements AutoRouteWrapper {
   Widget wrappedRoute(BuildContext context) {
     return BlocProvider(
       create: (context) =>
-          getIt<OrderDetailCubit>()..getOrderById(token: '', orderId: orderId),
+          getIt<OrderDetailCubit>()..getOrderById(orderId: orderId),
       child: this,
     );
   }
@@ -44,7 +44,7 @@ class OrderDetailPage extends StatelessWidget implements AutoRouteWrapper {
               return ErrorText(
                 message: state.failure?.message ?? context.l10n.unexpectedError,
                 onRetry: () {
-                  cubit.getOrderById(token: '', orderId: orderId);
+                  cubit.getOrderById(orderId: orderId);
                 },
               );
             } else {

@@ -35,8 +35,6 @@ class _OrdersPageState extends State<OrdersPage> {
   void initState() {
     _ordersPagingController.addPageRequestListener((pageKey) {
       context.read<OrdersCubit>().getOrders(
-            // token: context.read<AuthCubit>().state.authToken!.token,
-            token: '1c7b3156-986b-487b-8d6c-2db03806ca30',
             pageKey: pageKey,
             pageLimit: _ordersPageLimit,
             onCompleted: (orders) {

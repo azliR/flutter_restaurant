@@ -1,8 +1,8 @@
+import 'package:animations/animations.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_restaurant/bloc/preferences/preferences_cubit.dart';
 import 'package:flutter_restaurant/views/core/app_router.dart';
+import 'package:flutter_restaurant/views/core/widgets/auth_consumer.dart';
 
 enum HomeSection { overview, map, orders, account }
 
@@ -85,69 +85,76 @@ class HomePage extends StatelessWidget with AutoRouteWrapper {
       navigationType = NavigationType.drawer;
     }
 
-    return AutoTabsRouter(
-      duration: const Duration(milliseconds: 1000),
-      routes: HomeSection.values.map((section) {
-        switch (section) {
-          case HomeSection.overview:
-            return const OverviewWrapperRoute();
-          case HomeSection.orders:
-            return const OrdersWrapperRoute();
-          case HomeSection.map:
-            return const MapWrapperRoute();
-          case HomeSection.account:
-            return const AccountWrapperRoute();
-        }
-      }).toList(),
-      builder: (context, child, animation) {
-        final tabsRouter = AutoTabsRouter.of(context);
+    return AuthListener(
+      child: AutoTabsRouter(
+        duration: const Duration(milliseconds: 300),
+        lazyLoad: true,
+        curve: Curves.easeIn,
+        routes: HomeSection.values.map((section) {
+          switch (section) {
+            case HomeSection.overview:
+              return const OverviewWrapperRoute();
+            case HomeSection.orders:
+              return const OrdersWrapperRoute();
+            case HomeSection.map:
+              return const MapWrapperRoute();
+            case HomeSection.account:
+              return const AccountWrapperRoute();
+          }
+        }).toList(),
+        builder: (context, child, animation) {
+          final tabsRouter = AutoTabsRouter.of(context);
 
-        return WillPopScope(
-          onWillPop: () async {
-            if (tabsRouter.activeIndex != 0) {
-              tabsRouter.setActiveIndex(0);
-              return false;
-            } else {
-              return true;
-            }
-          },
-          child: Scaffold(
-            bottomNavigationBar: navigationType == NavigationType.bottom
-                ? NavigationBar(
-                    selectedIndex: tabsRouter.activeIndex,
-                    onDestinationSelected: (index) =>
-                        _onNavigationChanged(context, index),
-                    destinations: destinations
-                        .map(
-                          (destination) => NavigationDestination(
-                            label: destination.label,
-                            icon: Icon(destination.icon),
-                            selectedIcon: Icon(destination.selectedIcon),
-                          ),
-                        )
-                        .toList(),
-                  )
-                : null,
-            body: Row(
-              children: [
-                if (navigationType != NavigationType.bottom) ...[
-                  _HomeNavigationRail(
-                    extended: navigationType == NavigationType.drawer,
-                    destinations: destinations,
-                    selectedIndex: tabsRouter.activeIndex,
-                    onDestinationSelected: (index) =>
-                        _onNavigationChanged(context, index),
+          return WillPopScope(
+            onWillPop: () async {
+              if (tabsRouter.activeIndex != 0) {
+                tabsRouter.setActiveIndex(0);
+                return false;
+              } else {
+                return true;
+              }
+            },
+            child: Scaffold(
+              bottomNavigationBar: navigationType == NavigationType.bottom
+                  ? NavigationBar(
+                      selectedIndex: tabsRouter.activeIndex,
+                      onDestinationSelected: (index) =>
+                          _onNavigationChanged(context, index),
+                      destinations: destinations
+                          .map(
+                            (destination) => NavigationDestination(
+                              label: destination.label,
+                              icon: Icon(destination.icon),
+                              selectedIcon: Icon(destination.selectedIcon),
+                            ),
+                          )
+                          .toList(),
+                    )
+                  : null,
+              body: Row(
+                children: [
+                  if (navigationType != NavigationType.bottom) ...[
+                    _HomeNavigationRail(
+                      extended: navigationType == NavigationType.drawer,
+                      destinations: destinations,
+                      selectedIndex: tabsRouter.activeIndex,
+                      onDestinationSelected: (index) =>
+                          _onNavigationChanged(context, index),
+                    ),
+                    const VerticalDivider(width: 1, thickness: 0.2),
+                  ],
+                  Expanded(
+                    child: FadeScaleTransition(
+                      animation: animation,
+                      child: child,
+                    ),
                   ),
-                  const VerticalDivider(width: 1, thickness: 0.2),
                 ],
-                Expanded(
-                  child: child,
-                ),
-              ],
+              ),
             ),
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 }
@@ -193,59 +200,6 @@ class _HomeNavigationRail extends StatelessWidget {
                     ),
                   )
                   .toList(),
-            ),
-          ),
-          SizedBox(
-            width: double.infinity,
-            child: MaterialButton(
-              padding: const EdgeInsets.symmetric(vertical: 16),
-              onPressed: () {
-                context.read<PreferencesCubit>().setThemeMode(
-                      ThemeMode.values[(context
-                                  .read<PreferencesCubit>()
-                                  .state
-                                  .themeMode
-                                  .index +
-                              1) %
-                          ThemeMode.values.length],
-                    );
-              },
-              child:
-                  BlocSelector<PreferencesCubit, PreferencesState, ThemeMode>(
-                selector: (state) => state.themeMode,
-                builder: (context, themeMode) {
-                  if (extended) {
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 24,
-                        vertical: 4,
-                      ),
-                      child: Row(
-                        children: [
-                          Icon(
-                            Theme.of(context).brightness == Brightness.dark
-                                ? Icons.dark_mode_rounded
-                                : Icons.light_mode_rounded,
-                          ),
-                          const SizedBox(width: 16),
-                          Text(themeMode.name),
-                        ],
-                      ),
-                    );
-                  } else {
-                    return Column(
-                      children: [
-                        Icon(
-                          Theme.of(context).brightness == Brightness.dark
-                              ? Icons.dark_mode_rounded
-                              : Icons.light_mode_rounded,
-                        ),
-                        Text(themeMode.name),
-                      ],
-                    );
-                  }
-                },
-              ),
             ),
           ),
         ],

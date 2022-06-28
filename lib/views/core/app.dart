@@ -13,7 +13,6 @@ import 'package:flutter_restaurant/bloc/preferences/preferences_cubit.dart';
 import 'package:flutter_restaurant/injection.dart';
 import 'package:flutter_restaurant/l10n/l10n.dart';
 import 'package:flutter_restaurant/views/core/app_router.dart';
-import 'package:flutterfire_ui/i10n.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class App extends StatelessWidget {
@@ -41,9 +40,9 @@ class App extends StatelessWidget {
             previous.themeMode != current.themeMode,
         builder: (context, state) {
           final lightColorScheme =
-              ColorScheme.fromSeed(seedColor: Colors.deepOrange);
+              ColorScheme.fromSeed(seedColor: const Color(0xFFd17d21));
           final darkColorScheme = ColorScheme.fromSeed(
-            seedColor: Colors.deepOrange,
+            seedColor: const Color(0xFFd17d21),
             brightness: Brightness.dark,
           );
           final textTheme = GoogleFonts.plusJakartaSansTextTheme();
@@ -108,8 +107,6 @@ class App extends StatelessWidget {
             locale: state.locale,
             localizationsDelegates: [
               AppLocalizations.delegate,
-              GlobalMaterialLocalizations.delegate,
-              FlutterFireUILocalizations.delegate,
             ],
             supportedLocales: AppLocalizations.supportedLocales,
             routeInformationParser: _appRouter.defaultRouteParser(),

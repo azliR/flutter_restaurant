@@ -33,99 +33,129 @@ class _LoginTabViewState extends State<LoginTabView> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16),
-      child: Form(
-        key: _formKey,
-        autovalidateMode:
-            _autovalidate ? AutovalidateMode.always : AutovalidateMode.disabled,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Spacer(),
-            TextFormField(
-              controller: _phoneNumberController,
-              inputFormatters: [
-                FilteringTextInputFormatter.allow(RegExp(r'[0-9\+]')),
-              ],
-              validator: RequiredValidator(errorText: context.l10n.emptyError),
-              keyboardType: TextInputType.phone,
-              decoration: InputDecoration(
-                hintText: context.l10n.signInPhoneNumberHint,
-                prefixIcon: Icon(
-                  Icons.phone_rounded,
-                  color: Theme.of(context).colorScheme.primary,
-                  size: 22,
-                ),
-              ),
-            ),
-            const SizedBox(height: 10),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
+    final textTheme = Theme.of(context).textTheme;
+    final colorScheme = Theme.of(context).colorScheme;
+
+    return Center(
+      child: Card(
+        margin: const EdgeInsets.all(16),
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Form(
+            key: _formKey,
+            autovalidateMode: _autovalidate
+                ? AutovalidateMode.always
+                : AutovalidateMode.disabled,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
               children: [
-                Checkbox(
-                  value: _isAgree,
-                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  visualDensity: VisualDensity.compact,
-                  onChanged: (value) {
-                    setState(() => _isAgree = value!);
-                  },
+                Text(
+                  'Enter phone number',
+                  style: textTheme.titleMedium?.copyWith(
+                    color: colorScheme.primary,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-                Expanded(
-                  child: GestureDetector(
-                    onTap: () {
-                      setState(() => _isAgree = !_isAgree);
-                    },
-                    child: Text.rich(
-                      TextSpan(
-                        text: context.l10n.signInAgreement,
-                        children: [
-                          TextSpan(
-                            text: context.l10n.signInTermAndService,
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyText2
-                                ?.copyWith(
-                                    color:
-                                        Theme.of(context).colorScheme.primary),
-                            recognizer: TapGestureRecognizer()..onTap = () {},
-                          )
-                        ],
-                      ),
+                const SizedBox(height: 8),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  child: Text(
+                    context.l10n.signInVerify,
+                    textAlign: TextAlign.center,
+                    style: textTheme.titleSmall
+                        ?.copyWith(color: colorScheme.onBackground),
+                  ),
+                ),
+                const SizedBox(height: 36),
+                TextFormField(
+                  controller: _phoneNumberController,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.allow(RegExp(r'[0-9\+]')),
+                  ],
+                  style: textTheme.titleMedium?.copyWith(
+                    color: colorScheme.onSurface,
+                  ),
+                  validator:
+                      RequiredValidator(errorText: context.l10n.emptyError),
+                  keyboardType: TextInputType.phone,
+                  decoration: InputDecoration(
+                    hintText: '+62896XXXXXXXX',
+                    prefixIcon: Icon(
+                      Icons.phone_rounded,
+                      color: colorScheme.primary,
+                      size: 22,
                     ),
                   ),
-                )
+                ),
+                const SizedBox(height: 10),
+                Row(
+                  children: [
+                    Checkbox(
+                      value: _isAgree,
+                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      visualDensity: VisualDensity.compact,
+                      onChanged: (value) {
+                        setState(() => _isAgree = value!);
+                      },
+                    ),
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: () {
+                          setState(() => _isAgree = !_isAgree);
+                        },
+                        child: Text.rich(
+                          TextSpan(
+                            text: context.l10n.signInAgreement,
+                            children: [
+                              TextSpan(
+                                text: context.l10n.signInTermAndService,
+                                style: textTheme.bodyText2
+                                    ?.copyWith(color: colorScheme.primary),
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () {},
+                              )
+                            ],
+                            style: textTheme.bodyMedium
+                                ?.copyWith(color: colorScheme.onSurface),
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+                const SizedBox(height: 24),
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: colorScheme.primary,
+                      onPrimary: colorScheme.onPrimary,
+                    ),
+                    onPressed: () {
+                      setState(() => _autovalidate = true);
+
+                      if (_formKey.currentState!.validate()) {
+                        if (!_isAgree) {
+                          showErrorSnackbar(
+                            context,
+                            context.l10n.signInNeedAgreeError,
+                          );
+                        } else {
+                          context.router.push(
+                            OtpRoute(
+                              phoneNumber: _phoneNumberController.text.trim(),
+                              onCompleted: widget.onCompleted,
+                            ),
+                          );
+                        }
+                      }
+                    },
+                    child: Text(context.l10n.signInContinueButton),
+                  ),
+                ),
               ],
             ),
-            const Spacer(),
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () {
-                  setState(() => _autovalidate = true);
-
-                  if (_formKey.currentState!.validate()) {
-                    if (!_isAgree) {
-                      showErrorSnackbar(
-                          context, context.l10n.signInNeedAgreeError);
-                    } else {
-                      context.router.push(OtpRoute(
-                        phoneNumber: _phoneNumberController.text.trim(),
-                        onCompleted: widget.onCompleted,
-                      ));
-                    }
-                  }
-                },
-                child: Text(context.l10n.signInContinueButton),
-              ),
-            ),
-            const SizedBox(height: 22),
-            Text(
-              context.l10n.signInVerify,
-              style: Theme.of(context).textTheme.caption,
-            ),
-            const SizedBox(height: 8),
-          ],
+          ),
         ),
       ),
     );

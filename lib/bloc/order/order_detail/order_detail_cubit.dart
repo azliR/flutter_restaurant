@@ -17,7 +17,6 @@ class OrderDetailCubit extends Cubit<OrderDetailState> {
   final OrderRepository _orderRepository;
 
   Future<void> getOrderById({
-    required String token,
     required String orderId,
   }) async {
     emit(
@@ -27,7 +26,6 @@ class OrderDetailCubit extends Cubit<OrderDetailState> {
       ),
     );
     await _orderRepository.getOrderById(
-      token: token,
       orderId: orderId,
       onCompleted: (order) {
         emit(

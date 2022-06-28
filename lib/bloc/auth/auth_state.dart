@@ -5,7 +5,6 @@ enum AuthStatus { authorised, needCompletion, unauthorised }
 @immutable
 class AuthState extends Equatable {
   const AuthState({
-    this.authToken,
     this.userData,
     required this.isLoading,
     this.errorMessage,
@@ -14,7 +13,6 @@ class AuthState extends Equatable {
     required this.isSkipped,
   });
 
-  final AuthToken? authToken;
   final UserData? userData;
   final bool isLoading;
   final String? errorMessage;
@@ -34,7 +32,6 @@ class AuthState extends Equatable {
   Map<String, dynamic> toJson() {
     return {
       'authStatus': authStatus.name,
-      'authToken': authToken?.toJson(),
       'userData': userData?.toJson(),
       'isSkipped': isSkipped,
     };
@@ -45,14 +42,10 @@ class AuthState extends Equatable {
       (status) => status.name == map['authStatus'],
       orElse: () => AuthStatus.unauthorised,
     );
-    final authTokenMap = map['authToken'] as Map?;
     final userDataMap = map['userData'] as Map?;
 
     return AuthState.initial().copyWith(
       authStatus: authStatus,
-      authToken: optionOf(
-        authTokenMap != null ? AuthToken.fromJson(authTokenMap.cast()) : null,
-      ),
       userData: optionOf(
         userDataMap != null ? UserData.fromJson(userDataMap.cast()) : null,
       ),
@@ -61,7 +54,6 @@ class AuthState extends Equatable {
   }
 
   AuthState copyWith({
-    Option<AuthToken?>? authToken,
     Option<UserData?>? userData,
     bool? isLoading,
     String? errorMessage = _defaultErrorMessage,
@@ -70,8 +62,6 @@ class AuthState extends Equatable {
     bool? isSkipped,
   }) {
     return AuthState(
-      authToken:
-          authToken != null ? authToken.getOrElse(() => null) : this.authToken,
       userData:
           userData != null ? userData.getOrElse(() => null) : this.userData,
       isLoading: isLoading ?? this.isLoading,
@@ -88,7 +78,6 @@ class AuthState extends Equatable {
   @override
   List<Object?> get props {
     return [
-      authToken,
       userData,
       isLoading,
       errorMessage,

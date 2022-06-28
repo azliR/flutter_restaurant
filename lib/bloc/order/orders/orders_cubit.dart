@@ -15,7 +15,6 @@ class OrdersCubit extends Cubit<OrdersState> {
   final OrderRepository _orderRepository;
 
   Future<void> getOrders({
-    required String token,
     required int pageKey,
     required int pageLimit,
     String? key,
@@ -24,7 +23,6 @@ class OrdersCubit extends Cubit<OrdersState> {
     required void Function(Failure failure) onError,
   }) async {
     await _orderRepository.getOrders(
-      token: token,
       page: pageKey ~/ pageLimit + 1,
       pageLimit: pageLimit,
       onCompleted: onCompleted,

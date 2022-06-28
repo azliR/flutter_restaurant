@@ -1,2 +1,2 @@
-const kAppLogoImagePng = 'images/app-logo.png';
-const kMapsGridPng = 'images/maps-grid.png';
+const kAppLogoImagePng = 'assets/images/app-logo.png';
+const kMapsGridPng = 'assets/images/maps-grid.png';

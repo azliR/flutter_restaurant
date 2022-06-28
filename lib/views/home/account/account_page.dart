@@ -9,20 +9,20 @@ class AccountPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Orders'),
-      ),
-      body: BlocSelector<AuthCubit, AuthState, bool>(
-        selector: (state) => state.authStatus == AuthStatus.authorised,
-        builder: (context, isAuthorised) {
-          if (isAuthorised) {
-            return ProfileCompletionPage();
-          } else {
-            return const UnauthorisedWidget();
-          }
-        },
-      ),
+    return BlocSelector<AuthCubit, AuthState, bool>(
+      selector: (state) => state.authStatus == AuthStatus.authorised,
+      builder: (context, isAuthorised) {
+        if (isAuthorised) {
+          return const ProfileCompletionPage();
+        } else {
+          return Scaffold(
+            appBar: AppBar(
+              title: const Text('Profile'),
+            ),
+            body: const UnauthorisedWidget(),
+          );
+        }
+      },
     );
   }
 }

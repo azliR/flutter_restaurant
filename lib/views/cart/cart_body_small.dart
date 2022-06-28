@@ -70,11 +70,13 @@ class CartBodySmall extends StatelessWidget {
           const SliverPadding(padding: EdgeInsets.all(kBottomListPadding / 2)),
         ],
       ),
-      bottomNavigationBar: const Card(
+      bottomNavigationBar: Card(
         margin: EdgeInsets.zero,
         child: Padding(
-          padding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-          child: CartPlaceOrderButton(),
+          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16).add(
+            EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom),
+          ),
+          child: const CartPlaceOrderButton(),
         ),
       ),
     );

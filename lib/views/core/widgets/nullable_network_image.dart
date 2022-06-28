@@ -3,7 +3,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_restaurant/views/core/misc/asset_images.dart';
 import 'package:flutter_restaurant/views/core/misc/constants.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class NullableNetworkImage extends StatelessWidget {
   const NullableNetworkImage({
@@ -44,13 +43,13 @@ class NullableNetworkImage extends StatelessWidget {
             placeholder: (context, url) => Center(
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: SvgPicture.asset(kAppLogoImagePng),
+                child: Image.asset(kAppLogoImagePng),
               ),
             ),
             errorWidget: (context, url, error) => Center(
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: SvgPicture.asset(kAppLogoImagePng),
+                child: Image.asset(kAppLogoImagePng),
               ),
             ),
           ),

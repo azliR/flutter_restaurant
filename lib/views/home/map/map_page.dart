@@ -126,6 +126,7 @@ class _MapPageState extends State<MapPage> {
                 MapTileLayer(
                   urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
                   zoomPanBehavior: _zoomPanBehavior,
+                  initialZoomLevel: 15,
                   controller: _mapController,
                   initialMarkersCount: cubit.state.stores.length,
                   tooltipSettings: const MapTooltipSettings(
@@ -247,10 +248,6 @@ class _MapPageState extends State<MapPage> {
   }
 
   void _handlePageChange(int index) {
-    /// While updating the page viewer through interaction, selected position's
-    /// marker should be moved to the center of the maps. However, when the
-    /// marker is directly clicked, only the respective card should be moved to
-    /// center and the marker itself should not move to the center of the maps.
     if (!_canUpdateFocalLatLng) {
       if (_tappedMarkerIndex == index) {
         _updateSelectedCard(index);

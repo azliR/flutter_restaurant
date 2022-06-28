@@ -14,7 +14,6 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_restaurant/firebase_options.dart';
 import 'package:flutter_restaurant/injection.dart';
-import 'package:flutterfire_ui/auth.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart' as path;
 
@@ -47,15 +46,10 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder, String env) async {
           await Firebase.initializeApp(
             options: DefaultFirebaseOptions.currentPlatform,
           );
-          FlutterFireUIAuth.configureProviders([
-            const PhoneProviderConfiguration(),
-          ]);
 
           FlutterError.onError = (details) {
             log(details.exceptionAsString(), stackTrace: details.stack);
           };
-
-          FlutterNativeSplash.remove();
 
           return HydratedStorage.build(
             storageDirectory: kIsWeb

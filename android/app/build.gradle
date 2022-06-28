@@ -35,7 +35,7 @@ apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 android {
-    compileSdkVersion flutter.compileSdkVersion
+    compileSdkVersion 33
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -89,26 +89,17 @@ android {
         production {
             dimension "default"
             applicationIdSuffix ""
-            manifestPlaceholders = [
-                appName: "Restaurant",
-                googleMapApi: keystoreProperties['googleMapApiProd']
-            ]
+            manifestPlaceholders = [appName: "Restaurant"]
         }
         staging {
             dimension "default"
             applicationIdSuffix ""
-            manifestPlaceholders = [
-                appName: "[STG] Restaurant",
-                googleMapApi: keystoreProperties['googleMapApiProd']
-            ]
+            manifestPlaceholders = [appName: "[STG] Restaurant"]
         }
         development {
             dimension "default"
             applicationIdSuffix ""
-            manifestPlaceholders = [
-                appName: "[DEV] Restaurant",
-                googleMapApi: keystoreProperties['googleMapApiDev']
-            ]
+            manifestPlaceholders = [appName: "[DEV] Restaurant"]
         }
     }
 

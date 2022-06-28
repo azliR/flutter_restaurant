@@ -21,7 +21,6 @@ class CustomiseFoodBody extends StatelessWidget {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     final colorScheme = Theme.of(context).colorScheme;
-    final cubit = context.read<CustomiseFoodCubit>();
 
     return Column(
       children: [
@@ -94,6 +93,34 @@ class CustomiseFoodBody extends StatelessWidget {
                       ],
                     );
                   },
+                ),
+              ),
+              SliverToBoxAdapter(
+                child: Card(
+                  margin: const EdgeInsets.all(16),
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'About this food',
+                          style: textTheme.titleMedium?.copyWith(
+                            color: colorScheme.onBackground,
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        Text(
+                          item.description ?? 'No description',
+                          textAlign: TextAlign.justify,
+                          style: textTheme.bodyMedium?.copyWith(
+                            color: colorScheme.onSurface,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
               ),
             ],

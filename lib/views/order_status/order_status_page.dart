@@ -59,6 +59,7 @@ class OrderStatusPage extends StatelessWidget {
           Center(
             child: Text(
               'Show this QR code to the store to confirm your order.',
+              textAlign: TextAlign.center,
               style: textTheme.bodyMedium?.copyWith(
                 color: colorScheme.onBackground,
               ),

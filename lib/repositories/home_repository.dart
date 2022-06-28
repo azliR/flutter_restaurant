@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:developer';
-import 'dart:io';
 
 import 'package:flutter_restaurant/bloc/core/failure.dart';
 import 'package:flutter_restaurant/injection.dart';
@@ -407,42 +406,6 @@ class HomeRepository {
         final data = body['data'] as Map;
         final item = Item.fromJson(data.cast());
         onCompleted(item);
-      }
-    } catch (e, stackTrace) {
-      log(e.toString(), error: e, stackTrace: stackTrace);
-      onError(Failure(message: e.toString(), error: e, stackTrace: stackTrace));
-    }
-  }
-
-  Future<void> updateFcmToken({
-    required String token,
-    required String storeId,
-    required void Function() onCompleted,
-    required void Function(Failure failure) onError,
-  }) async {
-    try {
-      final uri = Uri(
-        scheme: getIt<LocalInjectableModule>().schemeApi,
-        host: getIt<LocalInjectableModule>().hostApi,
-        port: getIt<LocalInjectableModule>().portApi,
-        path: '/api/v1/user/fcm',
-      );
-      final response = await http.get(
-        uri,
-        headers: {HttpHeaders.authorizationHeader: token},
-      );
-      final body = jsonDecode(response.body) as Map;
-
-      if (response.statusCode != 200) {
-        onError(
-          Failure(
-            message: body['message'].toString(),
-            statusCode: response.statusCode,
-          ),
-        );
-      } else {
-        // final data = body['data'] as Map;
-        onCompleted();
       }
     } catch (e, stackTrace) {
       log(e.toString(), error: e, stackTrace: stackTrace);

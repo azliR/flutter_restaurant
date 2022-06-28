@@ -66,22 +66,7 @@ class _CartSummaryState extends State<CartSummary> {
                         ),
                       )
                     : TextButton(
-                        onPressed: () {
-                          // if (context.read<AuthCubit>().state.authStatus ==
-                          //     AuthStatus.unauthorised) {
-                          //   context.router.push(SignInRoute());
-                          // } else {
-                          //   if (_couponController.text.isNotEmpty) {
-                          //     context.read<CartCubit>().verifyCoupon(
-                          //         token: context
-                          //             .read<AuthCubit>()
-                          //             .state
-                          //             .authToken!
-                          //             .token,
-                          //         couponCode: _couponController.text);
-                          //   }
-                          // }
-                        },
+                        onPressed: () {},
                         child: Text(context.l10n.cartVerifyCoupon),
                       ),
               ),

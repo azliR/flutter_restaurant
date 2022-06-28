@@ -21,12 +21,10 @@ class AuthRepository {
   int? _forceResendingToken;
   ConfirmationResult? _confirmationResult;
 
-  FirebaseAuth get firebaseAuth => _firebaseAuth;
-
   Future<void> verifyPhoneNumber({
     required String phoneNumber,
     required void Function(String? message) onCodeSent,
-    required void Function() onCompleted,
+    required void Function(UserData userData) onCompleted,
     required void Function(String? message) onError,
   }) async {
     try {
@@ -43,25 +41,22 @@ class AuthRepository {
           forceResendingToken: _forceResendingToken,
           verificationCompleted: (phoneAuthCredential) async {
             final user = _firebaseAuth.currentUser;
+            String token;
             if (user != null) {
               await user.updatePhoneNumber(phoneAuthCredential);
-              // final token = await user.getIdToken();
-              // await _login(
-              //   token: token,
-              //   onCompleted: onCompleted,
-              //   onError: onError,
-              // );
+              token = await user.getIdToken(true);
             } else {
               final userCredential =
                   await _firebaseAuth.signInWithCredential(phoneAuthCredential);
-              // final token = await userCredential.user!.getIdToken();
-              // await _login(
-              //   token: token,
-              //   onCompleted: onCompleted,
-              //   onError: onError,
-              // );
+              token = await userCredential.user!.getIdToken(true);
             }
-            onCompleted();
+
+            await login(
+              token: token,
+              phone: phoneNumber,
+              onCompleted: onCompleted,
+              onError: onError,
+            );
 
             _verificationId = null;
             _forceResendingToken = null;
@@ -91,19 +86,18 @@ class AuthRepository {
     required void Function(String? message) onError,
   }) async {
     try {
+      String token;
+      String phone;
+
       if (kIsWeb ||
           Platform.isLinux ||
           Platform.isMacOS ||
           Platform.isWindows) {
         final userCredential = await _confirmationResult!.confirm(otp);
-        final token = await userCredential.user!.getIdToken();
+        final user = userCredential.user!;
+        token = await user.getIdToken(true);
+        phone = user.phoneNumber!;
 
-        await login(
-          token: token,
-          phone: userCredential.user!.phoneNumber!,
-          onCompleted: onCompleted,
-          onError: onError,
-        );
         _confirmationResult = null;
       } else {
         final credential = PhoneAuthProvider.credential(
@@ -111,28 +105,27 @@ class AuthRepository {
           smsCode: otp,
         );
         final user = _firebaseAuth.currentUser;
+        user?.reload();
         if (user != null) {
           await user.updatePhoneNumber(credential);
           await _firebaseAuth.currentUser!.reload();
-          // final token = await _firebaseAuth.currentUser!.getIdToken();
-          // await _login(
-          //   token: token,
-          //   onCompleted: onCompleted,
-          //   onError: onError,
-          // );
-          // onCompleted();
+          token = await user.getIdToken(true);
+          phone = user.phoneNumber!;
         } else {
           final userCredential =
               await _firebaseAuth.signInWithCredential(credential);
-          // final token = await userCredential.user!.getIdToken();
-          // await createAccount(
-          //   // token: token,
-          //   onCompleted: onCompleted,
-          //   onError: onError,
-          // );
-          // onCompleted();
+          final user = userCredential.user!;
+          token = await user.getIdToken(true);
+          phone = user.phoneNumber!;
         }
       }
+
+      await login(
+        token: token,
+        phone: phone,
+        onCompleted: onCompleted,
+        onError: onError,
+      );
     } catch (e, stackTrace) {
       log(e.toString(), error: e, stackTrace: stackTrace);
       onError(e.toString());
@@ -146,35 +139,28 @@ class AuthRepository {
     required void Function(String? message) onError,
   }) async {
     try {
-      // final url = Uri(
-      //   scheme: getIt<LocalInjectableModule>().schemeApi,
-      //   host: getIt<LocalInjectableModule>().hostApi,
-      //   port: getIt<LocalInjectableModule>().portApi,
-      //   path: '/api/v1/user/auth',
-      // );
-      // final response = await http.post(
-      //   url,
-      //   headers: {HttpHeaders.contentTypeHeader: 'application/json'},
-      //   body: jsonEncode({
-      //     'phone': phone,
-      //     'token': token,
-      //   }),
-      // );
-      // final body = (jsonDecode(response.body) as Map).cast<String, dynamic>();
-      // if (response.statusCode == 200) {
-      //   final userData = UserData.fromJson(body);
-      //   onCompleted(userData);
-      // } else {
-      //   final e = body['message'] as String?;
-      //   onError(e);
-      // }
-      onCompleted(UserData(
-        id: '',
-        fullName: '',
-        createdAt: DateTime.now(),
-        phone: phone,
-        languageCode: 'en',
-      ));
+      final url = Uri(
+        scheme: getIt<LocalInjectableModule>().schemeApi,
+        host: getIt<LocalInjectableModule>().hostApi,
+        port: getIt<LocalInjectableModule>().portApi,
+        path: '/api/v1/user/auth',
+      );
+      final response = await http.post(
+        url,
+        headers: {
+          HttpHeaders.contentTypeHeader: 'application/json',
+          HttpHeaders.authorizationHeader: 'Bearer $token',
+        },
+      );
+      final body = (jsonDecode(response.body) as Map).cast<String, dynamic>();
+      if (response.statusCode == 200) {
+        final userData =
+            UserData.fromJson(body['data'] as Map<String, dynamic>);
+        onCompleted(userData);
+      } else {
+        final e = body['message'] as String?;
+        onError(e);
+      }
     } catch (e, stackTrace) {
       log(e.toString(), error: e, stackTrace: stackTrace);
       onError(e.toString());
@@ -182,11 +168,11 @@ class AuthRepository {
   }
 
   Future<void> getProfile({
-    required String token,
     required void Function(UserData userData) onCompleted,
     required void Function(String? message) onError,
   }) async {
     try {
+      final token = await _firebaseAuth.currentUser!.getIdToken();
       final url = Uri(
         scheme: getIt<LocalInjectableModule>().schemeApi,
         host: getIt<LocalInjectableModule>().hostApi,
@@ -210,13 +196,13 @@ class AuthRepository {
   }
 
   Future<void> updateProfile({
-    required String token,
     required String name,
     required String language,
     required void Function(UserData userData) onCompleted,
     required void Function(String? message) onError,
   }) async {
     try {
+      final token = await _firebaseAuth.currentUser!.getIdToken();
       final url = Uri(
         scheme: getIt<LocalInjectableModule>().schemeApi,
         host: getIt<LocalInjectableModule>().hostApi,
@@ -227,8 +213,7 @@ class AuthRepository {
         url,
         headers: {
           HttpHeaders.contentTypeHeader: 'application/json',
-          HttpHeaders.authorizationHeader:
-              'Bearer 1c7b3156-986b-487b-8d6c-2db03806ca30',
+          HttpHeaders.authorizationHeader: 'Bearer $token',
         },
         body: jsonEncode({
           'full_name': name,

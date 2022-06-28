@@ -150,10 +150,16 @@ class _CustomiseFoodPageState extends State<CustomiseFoodPage> {
             ),
             child: Padding(
               padding: const EdgeInsets.all(16),
-              child: Row(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisSize: MainAxisSize.min,
                 children: [
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
+                  Wrap(
+                    alignment: WrapAlignment.end,
+                    runAlignment: WrapAlignment.center,
+                    crossAxisAlignment: WrapCrossAlignment.center,
+                    spacing: 8,
+                    runSpacing: 4,
                     children: [
                       Text(
                         context.l10n.customiseOrderQuantity,
@@ -161,7 +167,6 @@ class _CustomiseFoodPageState extends State<CustomiseFoodPage> {
                           color: colorScheme.onBackground,
                         ),
                       ),
-                      const SizedBox(width: 8),
                       TextButton(
                         style: TextButton.styleFrom(
                           backgroundColor: colorScheme.surfaceVariant,
@@ -169,7 +174,6 @@ class _CustomiseFoodPageState extends State<CustomiseFoodPage> {
                         onPressed: () => cubit.minusQuantity(),
                         child: const Icon(Icons.remove_rounded),
                       ),
-                      const SizedBox(width: 8),
                       BlocSelector<CustomiseFoodCubit, CustomiseFoodState, int>(
                         selector: (state) => state.quantity,
                         builder: (context, quantity) {
@@ -181,32 +185,31 @@ class _CustomiseFoodPageState extends State<CustomiseFoodPage> {
                           );
                         },
                       ),
-                      const SizedBox(width: 8),
                       TextButton(
                         style: TextButton.styleFrom(
                           backgroundColor: colorScheme.surfaceVariant,
                         ),
                         onPressed: () => cubit.addQuantity(),
                         child: const Icon(Icons.add_rounded),
-                      )
+                      ),
+                      const Spacer(),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          padding: const EdgeInsets.all(16),
+                          primary: colorScheme.primary,
+                          onPrimary: colorScheme.onPrimary,
+                        ),
+                        onPressed: () => _onAddToCart(context, state.item!),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(context.l10n.customiseFoodAddToCart),
+                            const SizedBox(width: 8),
+                            const Icon(Icons.add_shopping_cart_rounded),
+                          ],
+                        ),
+                      ),
                     ],
-                  ),
-                  const Spacer(),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      padding: const EdgeInsets.all(16),
-                      primary: colorScheme.primary,
-                      onPrimary: colorScheme.onPrimary,
-                    ),
-                    onPressed: () => _onAddToCart(context, state.item!),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(context.l10n.customiseFoodAddToCart),
-                        const SizedBox(width: 8),
-                        const Icon(Icons.add_shopping_cart_rounded),
-                      ],
-                    ),
                   ),
                 ],
               ),

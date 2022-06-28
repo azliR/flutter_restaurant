@@ -126,7 +126,11 @@ class CustomSliverAppBar extends SliverPersistentHeaderDelegate {
         Align(
           alignment: Alignment.topLeft,
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(8.0).add(
+              EdgeInsets.only(
+                top: MediaQuery.of(context).padding.top,
+              ),
+            ),
             child: BackButton(color: colorScheme.secondary),
           ),
         ),

@@ -140,6 +140,39 @@ class _OverviewPageState extends State<OverviewPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Restaurant'),
+        actions: [
+          IconButton(
+            padding: const EdgeInsets.symmetric(vertical: 16),
+            onPressed: () {
+              context.read<PreferencesCubit>().setThemeMode(
+                    ThemeMode.values[(context
+                                .read<PreferencesCubit>()
+                                .state
+                                .themeMode
+                                .index +
+                            1) %
+                        ThemeMode.values.length],
+                  );
+            },
+            icon: BlocSelector<PreferencesCubit, PreferencesState, ThemeMode>(
+              selector: (state) => state.themeMode,
+              builder: (context, themeMode) {
+                return Icon(
+                  () {
+                    switch (themeMode) {
+                      case ThemeMode.system:
+                        return Icons.smartphone;
+                      case ThemeMode.light:
+                        return Icons.light_mode_rounded;
+                      case ThemeMode.dark:
+                        return Icons.dark_mode_rounded;
+                    }
+                  }(),
+                );
+              },
+            ),
+          ),
+        ],
       ),
       body: BlocBuilder<PreferencesCubit, PreferencesState>(
         buildWhen: (previous, current) => previous.position != current.position,
@@ -149,7 +182,6 @@ class _OverviewPageState extends State<OverviewPage> {
             builder: (context, isLoading) {
               return ListView(
                 children: [
-                  // const _HomeAppBar(),
                   const SizedBox(height: 4),
                   if (isLoading || isDialogOpen)
                     const Center(
@@ -265,11 +297,14 @@ class _OverviewPageState extends State<OverviewPage> {
                                   return SpecialOfferTile(
                                     specialOffer: specialOffer,
                                     onTap: () {
-                                      context.router.push(
+                                      context.router.pushAll([
+                                        RestMenuRoute(
+                                          storeId: specialOffer.storeId,
+                                        ),
                                         CustomiseFoodRoute(
                                           itemId: specialOffer.id,
                                         ),
-                                      );
+                                      ]);
                                     },
                                   );
                                 },
@@ -280,6 +315,7 @@ class _OverviewPageState extends State<OverviewPage> {
                       ),
                     ),
                   ],
+                  const SizedBox(height: 36),
                 ],
               );
             },

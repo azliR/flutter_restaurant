@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_restaurant/bloc/core/failure.dart';
 import 'package:flutter_restaurant/injection.dart';
 import 'package:flutter_restaurant/models/order/order.dart';
@@ -12,8 +13,11 @@ import 'package:injectable/injectable.dart';
 
 @lazySingleton
 class OrderRepository {
+  OrderRepository(this._firebaseAuth);
+
+  final FirebaseAuth _firebaseAuth;
+
   Future<void> getOrders({
-    required String token,
     required int page,
     required int pageLimit,
     String? key,
@@ -22,6 +26,7 @@ class OrderRepository {
     required void Function(Failure failure) onError,
   }) async {
     try {
+      final token = await _firebaseAuth.currentUser!.getIdToken();
       final uri = Uri(
         scheme: getIt<LocalInjectableModule>().schemeApi,
         host: getIt<LocalInjectableModule>().hostApi,
@@ -60,12 +65,12 @@ class OrderRepository {
   }
 
   Future<void> getOrderById({
-    required String token,
     required String orderId,
     required void Function(Order order) onCompleted,
     required void Function(Failure failure) onError,
   }) async {
     try {
+      final token = await _firebaseAuth.currentUser!.getIdToken();
       final uri = Uri(
         scheme: getIt<LocalInjectableModule>().schemeApi,
         host: getIt<LocalInjectableModule>().hostApi,

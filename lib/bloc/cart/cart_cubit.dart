@@ -120,14 +120,12 @@ class CartCubit extends Cubit<CartState> {
   }
 
   Future<void> placeOrder({
-    required String token,
     String? storeId,
     List<Cart>? items,
     required void Function(Order order) onCompleted,
     required void Function(Failure? failure) onError,
   }) async {
     await _cartRepository.placeOrder(
-      token: token,
       storeId: storeId ?? state.storeId!,
       orderType: state.orderType.name,
       pickupType: state.pickupType.name,
@@ -151,35 +149,4 @@ class CartCubit extends Cubit<CartState> {
       ),
     );
   }
-
-  // Future<void> verifyCoupon({
-  //   required String token,
-  //   required String couponCode,
-  // }) async {
-  //   emit(state.copyWith(
-  //     isCouponLoading: true,
-  //     discount: null,
-  //     couponFailure: null,
-  //   ));
-  //   await _cartRepository.verifyCoupon(
-  //     token: token,
-  //     couponCode: couponCode,
-  //     totalAmount: state.carts.map((e) => e.totalAmount).sum(),
-  //     storeId: state.storeId!,
-  //     onCompleted: (discount, coupon) {
-  //       emit(state.copyWith(
-  //         discount: discount,
-  //         coupon: coupon,
-  //         couponFailure: null,
-  //         isCouponLoading: false,
-  //       ));
-  //     },
-  //     onError: (failure) {
-  //       emit(state.copyWith(
-  //         couponFailure: failure,
-  //         isCouponLoading: false,
-  //       ));
-  //     },
-  //   );
-  // }
 }

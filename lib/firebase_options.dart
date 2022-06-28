@@ -64,8 +64,10 @@ class DefaultFirebaseOptions {
     messagingSenderId: '604627191517',
     projectId: 'restaurant-70076',
     storageBucket: 'restaurant-70076.appspot.com',
-    androidClientId: '604627191517-30av0r43v5ivgm1627ocert4fno5711e.apps.googleusercontent.com',
-    iosClientId: '604627191517-b2sq4ie2jrej0jgoih6ioep9vrbigk6v.apps.googleusercontent.com',
+    androidClientId:
+        '604627191517-30av0r43v5ivgm1627ocert4fno5711e.apps.googleusercontent.com',
+    iosClientId:
+        '604627191517-b2sq4ie2jrej0jgoih6ioep9vrbigk6v.apps.googleusercontent.com',
     iosBundleId: 'com.azlir.restaurant',
   );
 
