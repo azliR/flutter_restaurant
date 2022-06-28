@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:injectable/injectable.dart';
@@ -14,14 +14,20 @@ class PreferencesCubit extends HydratedCubit<PreferencesState> {
     emit(state.copyWith(isFirstLaunch: false));
   }
 
+  void setThemeMode(ThemeMode themeMode) {
+    emit(state.copyWith(themeMode: themeMode));
+  }
+
   void setLocale(Locale locale) {
     emit(state.copyWith(locale: locale));
   }
 
   void setLocation(Position position) {
-    emit(state.copyWith(
-      position: position,
-    ),);
+    emit(
+      state.copyWith(
+        position: position,
+      ),
+    );
   }
 
   @override

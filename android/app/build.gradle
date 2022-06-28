@@ -91,7 +91,7 @@ android {
             applicationIdSuffix ""
             manifestPlaceholders = [
                 appName: "Restaurant",
-                googleMapApi: "AIzaSyCfIQFNju-sqE_z_Llq9UcmMjpUnBc2U8Y"
+                googleMapApi: keystoreProperties['googleMapApiProd']
             ]
         }
         staging {
@@ -99,7 +99,7 @@ android {
             applicationIdSuffix ""
             manifestPlaceholders = [
                 appName: "[STG] Restaurant",
-                googleMapApi: "AIzaSyCfIQFNju-sqE_z_Llq9UcmMjpUnBc2U8Y"
+                googleMapApi: keystoreProperties['googleMapApiProd']
             ]
         }
         development {
@@ -107,7 +107,7 @@ android {
             applicationIdSuffix ""
             manifestPlaceholders = [
                 appName: "[DEV] Restaurant",
-                googleMapApi: "AIzaSyCfIQFNju-sqE_z_Llq9UcmMjpUnBc2U8Y"
+                googleMapApi: keystoreProperties['googleMapApiDev']
             ]
         }
     }

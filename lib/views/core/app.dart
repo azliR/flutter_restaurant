@@ -8,11 +8,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_restaurant/bloc/auth/auth_cubit.dart';
+import 'package:flutter_restaurant/bloc/cart/cart_cubit.dart';
 import 'package:flutter_restaurant/bloc/preferences/preferences_cubit.dart';
 import 'package:flutter_restaurant/injection.dart';
 import 'package:flutter_restaurant/l10n/l10n.dart';
 import 'package:flutter_restaurant/views/core/app_router.dart';
 import 'package:flutterfire_ui/i10n.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class App extends StatelessWidget {
   App({Key? key}) : super(key: key);
@@ -24,22 +26,86 @@ class App extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => getIt<PreferencesCubit>(),
+          create: (_) => getIt<PreferencesCubit>(),
         ),
         BlocProvider(
-          create: (context) => getIt<AuthCubit>(),
+          create: (_) => getIt<AuthCubit>(),
+        ),
+        BlocProvider(
+          create: (_) => getIt<CartCubit>(),
         ),
       ],
-      child: BlocSelector<PreferencesCubit, PreferencesState, Locale?>(
-        selector: (state) => state.locale,
-        builder: (context, locale) {
+      child: BlocBuilder<PreferencesCubit, PreferencesState>(
+        buildWhen: (previous, current) =>
+            previous.locale != current.locale ||
+            previous.themeMode != current.themeMode,
+        builder: (context, state) {
+          final lightColorScheme =
+              ColorScheme.fromSeed(seedColor: Colors.deepOrange);
+          final darkColorScheme = ColorScheme.fromSeed(
+            seedColor: Colors.deepOrange,
+            brightness: Brightness.dark,
+          );
+          final textTheme = GoogleFonts.plusJakartaSansTextTheme();
+
           return MaterialApp.router(
+            debugShowCheckedModeBanner: false,
             title: 'Restaurant',
+            themeMode: state.themeMode,
             theme: ThemeData(
               useMaterial3: true,
               colorSchemeSeed: Colors.deepOrange,
+              cardTheme: const CardTheme(
+                shadowColor: Colors.transparent,
+                margin: EdgeInsets.zero,
+              ),
+              textTheme: textTheme,
+              inputDecorationTheme: const InputDecorationTheme(filled: true),
+              chipTheme: ChipThemeData(
+                elevation: 0,
+                pressElevation: 0,
+                backgroundColor: lightColorScheme.surface,
+                selectedColor: lightColorScheme.primaryContainer,
+                selectedShadowColor: Colors.transparent,
+                labelStyle: textTheme.bodyMedium
+                    ?.copyWith(color: lightColorScheme.onSurface),
+                side: BorderSide(color: lightColorScheme.outline),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+              snackBarTheme: const SnackBarThemeData(
+                behavior: SnackBarBehavior.floating,
+              ),
             ),
-            locale: locale,
+            darkTheme: ThemeData(
+              useMaterial3: true,
+              brightness: Brightness.dark,
+              colorSchemeSeed: Colors.deepOrange,
+              cardTheme: const CardTheme(
+                shadowColor: Colors.transparent,
+                margin: EdgeInsets.zero,
+              ),
+              textTheme: textTheme,
+              inputDecorationTheme: const InputDecorationTheme(filled: true),
+              chipTheme: ChipThemeData(
+                elevation: 0,
+                pressElevation: 0,
+                backgroundColor: darkColorScheme.surface,
+                selectedColor: darkColorScheme.primaryContainer,
+                selectedShadowColor: Colors.transparent,
+                labelStyle: textTheme.bodyMedium
+                    ?.copyWith(color: darkColorScheme.onSurface),
+                side: BorderSide(color: darkColorScheme.outline),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+              snackBarTheme: const SnackBarThemeData(
+                behavior: SnackBarBehavior.floating,
+              ),
+            ),
+            locale: state.locale,
             localizationsDelegates: [
               AppLocalizations.delegate,
               GlobalMaterialLocalizations.delegate,

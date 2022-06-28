@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "604627191517-30av0r43v5ivgm1627ocert4fno5711e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.azlir.restaurant",
+            "certificate_hash": "93bf0d5abf4fbeb3fb09028f9a69a63e8b9849dc"
+          }
+        },
+        {
           "client_id": "604627191517-nm4olr08sbar2pjnti2al4touvcfalau.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -31,10 +39,46 @@
               "client_type": 3
             },
             {
-              "client_id": "604627191517-b2sq4ie2jrej0jgoih6ioep9vrbigk6v.apps.googleusercontent.com",
+              "client_id": "604627191517-3opi4t0lcpo04u3i26vh8r76d1ll3us6.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.azlir.restaurant"
+                "bundle_id": "com.azlir.restaurant.store"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:604627191517:android:863392568a658a13307d34",
+        "android_client_info": {
+          "package_name": "com.azlir.restaurant.store"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "604627191517-nm4olr08sbar2pjnti2al4touvcfalau.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCfIQFNju-sqE_z_Llq9UcmMjpUnBc2U8Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "604627191517-nm4olr08sbar2pjnti2al4touvcfalau.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "604627191517-3opi4t0lcpo04u3i26vh8r76d1ll3us6.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.azlir.restaurant.store"
               }
             }
           ]

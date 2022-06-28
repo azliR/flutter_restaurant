@@ -124,19 +124,22 @@ class AppTheme {
 
   static const _dialogTheme = DialogTheme(
     shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(kBorderRadius)),),
+      borderRadius: BorderRadius.all(Radius.circular(kBorderRadius)),
+    ),
   );
 
   static const _buttonTheme = ButtonThemeData(
     padding: EdgeInsets.symmetric(horizontal: 18, vertical: 12),
     shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(kBorderRadius)),),
+      borderRadius: BorderRadius.all(Radius.circular(kBorderRadius)),
+    ),
     textTheme: ButtonTextTheme.primary,
   );
 
   static const _popupMenuThemeData = PopupMenuThemeData(
     shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(kBorderRadius)),),
+      borderRadius: BorderRadius.all(Radius.circular(kBorderRadius)),
+    ),
   );
 
   static ScrollbarThemeData _scrollbarThemeData({
@@ -214,7 +217,8 @@ class AppTheme {
         elevation: 0,
         padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
         shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(kBorderRadius)),),
+          borderRadius: BorderRadius.all(Radius.circular(kBorderRadius)),
+        ),
       ),
     );
   }
@@ -237,7 +241,8 @@ class AppTheme {
         primary: color,
         padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
         shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(kBorderRadius)),),
+          borderRadius: BorderRadius.all(Radius.circular(kBorderRadius)),
+        ),
       ).copyWith(
         side: MaterialStateProperty.resolveWith(
           (Set<MaterialState> states) {
@@ -271,7 +276,7 @@ class AppTheme {
         primary: color,
         padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
         shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(16)),
+          borderRadius: BorderRadius.all(Radius.circular(kBorderRadius)),
         ),
       ),
     );

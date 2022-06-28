@@ -4,7 +4,8 @@ import 'dart:io';
 
 import 'package:flutter_restaurant/bloc/core/failure.dart';
 import 'package:flutter_restaurant/injection.dart';
-import 'package:flutter_restaurant/models/order.dart';
+import 'package:flutter_restaurant/models/order/order.dart';
+import 'package:flutter_restaurant/models/order/orders.dart';
 import 'package:flutter_restaurant/repositories/core/local_injectable_module.dart';
 import 'package:http/http.dart' as http;
 import 'package:injectable/injectable.dart';
@@ -17,30 +18,28 @@ class OrderRepository {
     required int pageLimit,
     String? key,
     String? status,
-    required void Function(List<Order> orders) onCompleted,
+    required void Function(List<Orders> orders) onCompleted,
     required void Function(Failure failure) onError,
   }) async {
     try {
       final uri = Uri(
-        scheme: getIt<LocalInjectableModule>().kSchemeApi,
+        scheme: getIt<LocalInjectableModule>().schemeApi,
         host: getIt<LocalInjectableModule>().hostApi,
         port: getIt<LocalInjectableModule>().portApi,
-        path: '/api/v1/user/orders',
+        path: '/api/v1/user/order',
         queryParameters: {
           'page': page.toString(),
-          'pageLimit': pageLimit.toString(),
+          'page_limit': pageLimit.toString(),
           'key': key,
           'status': status,
         },
       );
       final response = await http.get(
         uri,
-        headers: {
-          HttpHeaders.authorizationHeader: 'Bearer $token',
-        },
+        headers: {HttpHeaders.authorizationHeader: 'Bearer $token'},
       );
       final body = jsonDecode(response.body) as Map;
-      log(body.toString());
+
       if (response.statusCode != 200) {
         onError(
           Failure(
@@ -50,12 +49,13 @@ class OrderRepository {
         );
       } else {
         final list = (body['data'] as List).cast<Map>();
-        final orders = list.map((data) => Order.fromJson(data.cast())).toList();
+        final orders =
+            list.map((data) => Orders.fromJson(data.cast())).toList();
         onCompleted(orders);
       }
     } catch (e, stackTrace) {
       log(e.toString(), error: e, stackTrace: stackTrace);
-      onError(Failure(message: e.toString()));
+      onError(Failure(message: e.toString(), error: e, stackTrace: stackTrace));
     }
   }
 
@@ -67,16 +67,14 @@ class OrderRepository {
   }) async {
     try {
       final uri = Uri(
-        scheme: getIt<LocalInjectableModule>().kSchemeApi,
+        scheme: getIt<LocalInjectableModule>().schemeApi,
         host: getIt<LocalInjectableModule>().hostApi,
         port: getIt<LocalInjectableModule>().portApi,
-        path: '/api/v1/user/orders/id/$orderId',
+        path: '/api/v1/user/order/$orderId',
       );
       final response = await http.get(
         uri,
-        headers: {
-          HttpHeaders.authorizationHeader: 'Bearer $token',
-        },
+        headers: {HttpHeaders.authorizationHeader: 'Bearer $token'},
       );
       final body = jsonDecode(response.body) as Map;
 
@@ -94,7 +92,7 @@ class OrderRepository {
       }
     } catch (e, stackTrace) {
       log(e.toString(), error: e, stackTrace: stackTrace);
-      onError(Failure(message: e.toString()));
+      onError(Failure(message: e.toString(), error: e, stackTrace: stackTrace));
     }
   }
 }

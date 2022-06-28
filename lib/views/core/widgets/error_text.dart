@@ -16,39 +16,44 @@ class ErrorText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Text(
-          message,
-          style: Theme.of(context).textTheme.bodyMedium,
-        ),
-        const SizedBox(height: 8),
-        Row(
-          mainAxisSize: MainAxisSize.min,
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
           children: [
-            if (stackTrace != null) ...[
-              TextButton(
-                onPressed: () {
-                  showDialog(
-                    context: context,
-                    builder: (context) => ErrorDialog(
-                      error: error,
-                      stackTrace: stackTrace,
-                    ),
-                  );
-                },
-                child: Text('Show stack trace'),
-              ),
-              const SizedBox(width: 8),
-            ],
-            ElevatedButton(
-              onPressed: onRetry,
-              // TODO: translate
-              child: Text('Retry'),
+            Text(
+              message,
+              style: Theme.of(context).textTheme.bodyMedium,
             ),
+            const SizedBox(height: 8),
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                if (stackTrace != null) ...[
+                  TextButton(
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) => ErrorDialog(
+                          error: error,
+                          stackTrace: stackTrace,
+                        ),
+                      );
+                    },
+                    child: const Text('Show stack trace'),
+                  ),
+                  const SizedBox(width: 8),
+                ],
+                ElevatedButton(
+                  onPressed: onRetry,
+                  // TODO: translate
+                  child: const Text('Retry'),
+                ),
+              ],
+            )
           ],
-        )
-      ],
+        ),
+      ),
     );
   }
 }
@@ -63,7 +68,7 @@ class ErrorDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     // TODO: translate
     return AlertDialog(
-      title: Text('Error occurred!'),
+      title: const Text('Error occurred!'),
       scrollable: true,
       content: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -81,7 +86,7 @@ class ErrorDialog extends StatelessWidget {
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: Text('Close'),
+          child: const Text('Close'),
         ),
       ],
     );

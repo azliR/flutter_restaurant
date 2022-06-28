@@ -7,7 +7,10 @@ import 'package:flutter_restaurant/bloc/home/overview/overview_cubit.dart';
 import 'package:flutter_restaurant/bloc/preferences/preferences_cubit.dart';
 import 'package:flutter_restaurant/injection.dart';
 import 'package:flutter_restaurant/l10n/l10n.dart';
-import 'package:flutter_restaurant/models/item.dart';
+import 'package:flutter_restaurant/models/home/nearby_store.dart';
+import 'package:flutter_restaurant/models/home/special_offer.dart';
+import 'package:flutter_restaurant/views/core/app_router.dart';
+import 'package:flutter_restaurant/views/core/misc/constants.dart';
 import 'package:flutter_restaurant/views/core/widgets/error_text.dart';
 import 'package:flutter_restaurant/views/home/overview/widgets/nearby_store_tile_widget.dart';
 import 'package:flutter_restaurant/views/home/overview/widgets/special_offer_tile_widget.dart';
@@ -19,24 +22,24 @@ class OverviewPage extends StatefulWidget implements AutoRouteWrapper {
   Widget wrappedRoute(BuildContext context) {
     final prefCubit = context.read<PreferencesCubit>();
     return BlocProvider(
-      create: (context) => getIt<HomeCubit>()
+      create: (context) => getIt<OverviewCubit>()
         ..initialise(
           position: prefCubit.state.position,
         ),
-      child: BlocListener<HomeCubit, HomeState>(
+      child: BlocListener<OverviewCubit, OverviewState>(
         listenWhen: (previous, current) =>
             previous.selectedCategory != current.selectedCategory,
         listener: (context, state) {
           final position = prefCubit.state.position;
           if (position != null) {
-            context.read<HomeCubit>().getNearbyStores(position: position);
+            context.read<OverviewCubit>().getNearbyStores(position: position);
           }
         },
         child: BlocListener<PreferencesCubit, PreferencesState>(
           listenWhen: (previous, current) =>
               previous.position != current.position,
           listener: (context, state) {
-            context.read<HomeCubit>().initialise(position: state.position);
+            context.read<OverviewCubit>().initialise(position: state.position);
           },
           child: this,
         ),
@@ -52,7 +55,7 @@ class _OverviewPageState extends State<OverviewPage> {
   bool isDialogOpen = false;
 
   Future<void> _showLocationDialog() {
-    final cubit = context.read<HomeCubit>();
+    final cubit = context.read<OverviewCubit>();
 
     return showModalBottomSheet(
       context: context,
@@ -120,7 +123,7 @@ class _OverviewPageState extends State<OverviewPage> {
         setState(() => isDialogOpen = false);
         prefCubit.setFirstLaunch();
       } else {
-        await context.read<HomeCubit>().determinePosition(
+        await context.read<OverviewCubit>().determinePosition(
           onCompleted: (position) {
             prefCubit.setLocation(position);
           },
@@ -132,13 +135,16 @@ class _OverviewPageState extends State<OverviewPage> {
 
   @override
   Widget build(BuildContext context) {
-    final cubit = context.read<HomeCubit>();
+    final cubit = context.read<OverviewCubit>();
 
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Restaurant'),
+      ),
       body: BlocBuilder<PreferencesCubit, PreferencesState>(
         buildWhen: (previous, current) => previous.position != current.position,
         builder: (context, state) {
-          return BlocSelector<HomeCubit, HomeState, bool>(
+          return BlocSelector<OverviewCubit, OverviewState, bool>(
             selector: (state) => state.isLoading,
             builder: (context, isLoading) {
               return ListView(
@@ -155,33 +161,49 @@ class _OverviewPageState extends State<OverviewPage> {
                   else if (state.position == null)
                     const _NoLocationErrorWidget()
                   else ...[
-                    Text(context.l10n.homeExploreNearby),
+                    _HomeTitle(
+                      title: context.l10n.homeNearbyTitle,
+                      subtitle: context.l10n.homeNearbySubtitle,
+                    ),
                     SizedBox(
                       height: 220,
-                      child: BlocBuilder<HomeCubit, HomeState>(
-                        buildWhen: (previous, current) =>
-                            previous.failureOrNearbyStores !=
-                            current.failureOrNearbyStores,
-                        builder: (context, state) {
-                          if (state.failureOrNearbyStores != null) {
-                            return state.failureOrNearbyStores!.fold(
-                              (l) => Text(l.message),
+                      child: BlocSelector<OverviewCubit, OverviewState,
+                          Either<Failure, List<NearbyStore>>?>(
+                        selector: (state) => state.failureOrNearbyStores,
+                        builder: (context, failureOrNearbyStores) {
+                          if (failureOrNearbyStores != null) {
+                            return failureOrNearbyStores.fold(
+                              (f) => ErrorText(
+                                message: f.message,
+                                error: f.error,
+                                stackTrace: f.stackTrace,
+                                onRetry: () {
+                                  cubit.getNearbyStores(
+                                    position: state.position!,
+                                  );
+                                },
+                              ),
                               (nearbyStores) {
                                 if (nearbyStores.isEmpty) {
                                   return Center(
                                     child: Text(context.l10n.homeNoNearbyStore),
                                   );
                                 }
-                                return ListView.builder(
+                                return ListView.separated(
                                   scrollDirection: Axis.horizontal,
-                                  padding:
-                                      const EdgeInsets.symmetric(horizontal: 8),
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: kHorizontalListPadding,
+                                  ),
+                                  separatorBuilder: (_, __) =>
+                                      const SizedBox(width: 8),
                                   itemCount: nearbyStores.length,
                                   itemBuilder: (context, index) {
                                     final nearbyStore = nearbyStores[index];
                                     return NearbyStoreTile(
                                       nearbyStore: nearbyStore,
-                                      onTap: () {},
+                                      onTap: () => context.router.push(
+                                        RestMenuRoute(storeId: nearbyStore.id),
+                                      ),
                                     );
                                   },
                                 );
@@ -195,12 +217,15 @@ class _OverviewPageState extends State<OverviewPage> {
                         },
                       ),
                     ),
-                    const Divider(),
-                    Text(context.l10n.homeSpecialOffers),
+                    const SizedBox(height: 8),
+                    _HomeTitle(
+                      title: context.l10n.homeSpecialOffersTitle,
+                      subtitle: context.l10n.homeSpecialOffersSubtitle,
+                    ),
                     SizedBox(
-                      height: 220,
-                      child: BlocSelector<HomeCubit, HomeState,
-                          Either<Failure, List<Item>>?>(
+                      height: 240,
+                      child: BlocSelector<OverviewCubit, OverviewState,
+                          Either<Failure, List<SpecialOffer>>?>(
                         selector: (state) => state.failureOrSpecialOffers,
                         builder: (context, failureOrSpecialOffers) {
                           if (failureOrSpecialOffers == null) {
@@ -216,7 +241,8 @@ class _OverviewPageState extends State<OverviewPage> {
                               stackTrace: f.stackTrace,
                               onRetry: () {
                                 cubit.getSpecialOffers(
-                                    position: state.position!);
+                                  position: state.position!,
+                                );
                               },
                             ),
                             (specialOffers) {
@@ -228,16 +254,23 @@ class _OverviewPageState extends State<OverviewPage> {
                               }
                               return ListView.separated(
                                 scrollDirection: Axis.horizontal,
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 8),
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: kHorizontalListPadding,
+                                ),
                                 separatorBuilder: (_, __) =>
                                     const SizedBox(width: 8),
                                 itemCount: specialOffers.length,
                                 itemBuilder: (context, index) {
-                                  final popularItem = specialOffers[index];
+                                  final specialOffer = specialOffers[index];
                                   return SpecialOfferTile(
-                                    item: popularItem,
-                                    onTap: () {},
+                                    specialOffer: specialOffer,
+                                    onTap: () {
+                                      context.router.push(
+                                        CustomiseFoodRoute(
+                                          itemId: specialOffer.id,
+                                        ),
+                                      );
+                                    },
                                   );
                                 },
                               );
@@ -257,12 +290,54 @@ class _OverviewPageState extends State<OverviewPage> {
   }
 }
 
+class _HomeTitle extends StatelessWidget {
+  const _HomeTitle({
+    Key? key,
+    required this.title,
+    required this.subtitle,
+  }) : super(key: key);
+
+  final String title;
+  final String subtitle;
+
+  @override
+  Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+    final colorScheme = Theme.of(context).colorScheme;
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        horizontal: kHorizontalListPadding,
+        vertical: 8,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            title,
+            style: textTheme.titleMedium?.copyWith(
+              color: colorScheme.onSurface,
+            ),
+          ),
+          Text(
+            subtitle,
+            style: textTheme.bodyMedium?.copyWith(
+              color: colorScheme.onSurface,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 class _NoLocationErrorWidget extends StatelessWidget {
   const _NoLocationErrorWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final cubit = context.read<HomeCubit>();
+    final cubit = context.read<OverviewCubit>();
+    final textTheme = Theme.of(context).textTheme;
 
     return Center(
       child: Padding(
@@ -275,16 +350,13 @@ class _NoLocationErrorWidget extends StatelessWidget {
             Text(
               context.l10n.homeLocationAccessTitle,
               textAlign: TextAlign.center,
-              style: Theme.of(context)
-                  .textTheme
-                  .subtitle1
-                  ?.copyWith(fontWeight: FontWeight.bold),
+              style: textTheme.subtitle1?.copyWith(fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 12),
             Text(
               context.l10n.homeLocationAccessSubtitle,
               textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.caption,
+              style: textTheme.caption,
             ),
             const SizedBox(height: 24),
             ElevatedButton(

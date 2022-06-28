@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-String formatCurrency(num? number) {
+String formatCurrency(num number) {
   return NumberFormat.currency(
     locale: 'id_ID',
-    symbol: 'Rp. ',
+    symbol: '',
+    decimalDigits: 0,
   ).format(number);
 }
 

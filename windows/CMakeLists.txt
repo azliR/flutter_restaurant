@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.14)
 project(flutter_restaurant LANGUAGES CXX)
 
-set(BINARY_NAME "flutter_restaurant")
+set(BINARY_NAME "Restaurant")
 
 cmake_policy(SET CMP0063 NEW)
 

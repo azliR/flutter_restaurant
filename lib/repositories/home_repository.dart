@@ -4,11 +4,13 @@ import 'dart:io';
 
 import 'package:flutter_restaurant/bloc/core/failure.dart';
 import 'package:flutter_restaurant/injection.dart';
-import 'package:flutter_restaurant/models/item.dart';
-import 'package:flutter_restaurant/models/item_category.dart';
-import 'package:flutter_restaurant/models/item_sub_category.dart';
-import 'package:flutter_restaurant/models/nearby_store.dart';
-import 'package:flutter_restaurant/models/store.dart';
+import 'package:flutter_restaurant/models/home/nearby_store.dart';
+import 'package:flutter_restaurant/models/home/special_offer.dart';
+import 'package:flutter_restaurant/models/item/item.dart';
+import 'package:flutter_restaurant/models/item/item_by_store.dart';
+import 'package:flutter_restaurant/models/item/item_category.dart';
+import 'package:flutter_restaurant/models/item/item_sub_category.dart';
+import 'package:flutter_restaurant/models/store/store.dart';
 import 'package:flutter_restaurant/repositories/core/local_injectable_module.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
@@ -43,7 +45,7 @@ class HomeRepository {
       onCompleted(await _geolocatorPlatform.getCurrentPosition());
     } catch (e, stackTrace) {
       log(e.toString(), error: e, stackTrace: stackTrace);
-      onError(Failure(message: e.toString()));
+      onError(Failure(message: e.toString(), error: e, stackTrace: stackTrace));
     }
   }
 
@@ -55,7 +57,7 @@ class HomeRepository {
   }) async {
     try {
       final uri = Uri(
-        scheme: getIt<LocalInjectableModule>().kSchemeApi,
+        scheme: getIt<LocalInjectableModule>().schemeApi,
         host: getIt<LocalInjectableModule>().hostApi,
         port: getIt<LocalInjectableModule>().portApi,
         path: '/api/v1/user/category/all',
@@ -82,7 +84,7 @@ class HomeRepository {
       }
     } catch (e, stackTrace) {
       log(e.toString(), error: e, stackTrace: stackTrace);
-      onError(Failure(message: e.toString()));
+      onError(Failure(message: e.toString(), error: e, stackTrace: stackTrace));
     }
   }
 
@@ -90,21 +92,21 @@ class HomeRepository {
     required String storeId,
     required int page,
     required int pageLimit,
-    required String? key,
+    required String? languageCode,
     required void Function(List<ItemSubCategory> subCategories) onCompleted,
     required void Function(Failure failure) onError,
   }) async {
     try {
       final uri = Uri(
-        scheme: getIt<LocalInjectableModule>().kSchemeApi,
+        scheme: getIt<LocalInjectableModule>().schemeApi,
         host: getIt<LocalInjectableModule>().hostApi,
         port: getIt<LocalInjectableModule>().portApi,
-        path: '/api/v1/user/subcategory/all',
+        path: '/api/v1/user/item/sub_category/all',
         queryParameters: {
-          'id': storeId,
+          'store_id': storeId,
           'page': page.toString(),
-          'pageLimit': pageLimit.toString(),
-          'key': key,
+          'page_limit': pageLimit.toString(),
+          'language_code': languageCode,
         },
       );
       final response = await http.get(uri);
@@ -125,7 +127,7 @@ class HomeRepository {
       }
     } catch (e, stackTrace) {
       log(e.toString(), error: e, stackTrace: stackTrace);
-      onError(Failure(message: e.toString()));
+      onError(Failure(message: e.toString(), error: e, stackTrace: stackTrace));
     }
   }
 
@@ -138,10 +140,10 @@ class HomeRepository {
   }) async {
     try {
       final uri = Uri(
-        scheme: getIt<LocalInjectableModule>().kSchemeApi,
+        scheme: getIt<LocalInjectableModule>().schemeApi,
         host: getIt<LocalInjectableModule>().hostApi,
         port: getIt<LocalInjectableModule>().portApi,
-        path: '/api/v1/home/nearby',
+        path: '/api/v1/user/home/nearby',
         queryParameters: {
           // 'lat': latitude.toString(),
           // 'lng': longitude.toString(),
@@ -168,7 +170,7 @@ class HomeRepository {
       }
     } catch (e, stackTrace) {
       log(e.toString(), error: e, stackTrace: stackTrace);
-      onError(Failure(message: e.toString()));
+      onError(Failure(message: e.toString(), error: e, stackTrace: stackTrace));
     }
   }
 
@@ -218,7 +220,7 @@ class HomeRepository {
   //     }
   //   } catch (e, stackTrace) {
   //     log(e.toString(), error: e, stackTrace: stackTrace);
-  //     onError(Failure(message: e.toString()));
+  //     onError(Failure(message: e.toString(), error: e, stackTrace: stackTrace));
   //   }
   // }
 
@@ -226,16 +228,16 @@ class HomeRepository {
     required double latitude,
     required double longitude,
     required int limit,
-    required void Function(List<Item> specialOffers) onCompleted,
+    required void Function(List<SpecialOffer> specialOffers) onCompleted,
     required void Function(Failure failure) onError,
   }) async {
     try {
       final module = getIt<LocalInjectableModule>();
       final uri = Uri(
-        scheme: module.kSchemeApi,
+        scheme: module.schemeApi,
         host: module.hostApi,
         port: module.portApi,
-        path: '/api/v1/home/special',
+        path: '/api/v1/user/home/special',
         queryParameters: {
           // 'lat': latitude.toString(),
           // 'lng': longitude.toString(),
@@ -257,7 +259,7 @@ class HomeRepository {
       } else {
         final list = (body['data'] as List).cast<Map>();
         final specialOffers =
-            list.map((data) => Item.fromJson(data.cast())).toList();
+            list.map((data) => SpecialOffer.fromJson(data.cast())).toList();
         onCompleted(specialOffers);
       }
     } catch (e, stackTrace) {
@@ -273,10 +275,10 @@ class HomeRepository {
   }) async {
     try {
       final uri = Uri(
-        scheme: getIt<LocalInjectableModule>().kSchemeApi,
+        scheme: getIt<LocalInjectableModule>().schemeApi,
         host: getIt<LocalInjectableModule>().hostApi,
         port: getIt<LocalInjectableModule>().portApi,
-        path: '/api/v1/user/store/id/$storeId',
+        path: '/api/v1/user/store/$storeId',
       );
       final response = await http.get(uri);
       final body = jsonDecode(response.body) as Map;
@@ -295,25 +297,25 @@ class HomeRepository {
       }
     } catch (e, stackTrace) {
       log(e.toString(), error: e, stackTrace: stackTrace);
-      onError(Failure(message: e.toString()));
+      onError(Failure(message: e.toString(), error: e, stackTrace: stackTrace));
     }
   }
 
   Future<void> getStores({
-    required int limit,
+    required int pageLimit,
     required void Function(List<Store> stores) onCompleted,
     required void Function(Failure failure) onError,
   }) async {
     try {
       final uri = Uri(
-        scheme: getIt<LocalInjectableModule>().kSchemeApi,
+        scheme: getIt<LocalInjectableModule>().schemeApi,
         host: getIt<LocalInjectableModule>().hostApi,
         port: getIt<LocalInjectableModule>().portApi,
         path: '/api/v1/user/store',
         queryParameters: {
           // 'key': null,
           'page': '1',
-          'pageLimit': limit.toString(),
+          'page_limit': pageLimit.toString(),
         },
       );
       final response = await http.get(uri);
@@ -333,7 +335,7 @@ class HomeRepository {
       }
     } catch (e, stackTrace) {
       log(e.toString(), error: e, stackTrace: stackTrace);
-      onError(Failure(message: e.toString()));
+      onError(Failure(message: e.toString(), error: e, stackTrace: stackTrace));
     }
   }
 
@@ -341,25 +343,21 @@ class HomeRepository {
     required int page,
     required int pageLimit,
     required String storeId,
-    required String? key,
-    required String? categoryId,
-    required String? subCategory,
-    required void Function(List<Item> itemsByStores) onCompleted,
+    required String? subCategoryId,
+    required void Function(List<ItemByStore> itemsByStores) onCompleted,
     required void Function(Failure failure) onError,
   }) async {
     try {
       final uri = Uri(
-        scheme: getIt<LocalInjectableModule>().kSchemeApi,
+        scheme: getIt<LocalInjectableModule>().schemeApi,
         host: getIt<LocalInjectableModule>().hostApi,
         port: getIt<LocalInjectableModule>().portApi,
         path: '/api/v1/user/item/store/$storeId',
         queryParameters: {
           'page': page.toString(),
-          'pageLimit': pageLimit.toString(),
-          'key': key,
-          'category_id': categoryId,
-          'sub_category': subCategory,
-        },
+          'page_limit': pageLimit.toString(),
+          'sub_category_id': subCategoryId,
+        }..removeWhere((key, value) => value == null),
       );
       final response = await http.get(uri);
       final body = jsonDecode(response.body) as Map;
@@ -373,12 +371,13 @@ class HomeRepository {
         );
       } else {
         final list = (body['data'] as List).cast<Map>();
-        final items = list.map((data) => Item.fromJson(data.cast())).toList();
+        final items =
+            list.map((data) => ItemByStore.fromJson(data.cast())).toList();
         onCompleted(items);
       }
     } catch (e, stackTrace) {
       log(e.toString(), error: e, stackTrace: stackTrace);
-      onError(Failure(message: e.toString()));
+      onError(Failure(message: e.toString(), error: e, stackTrace: stackTrace));
     }
   }
 
@@ -389,7 +388,7 @@ class HomeRepository {
   }) async {
     try {
       final uri = Uri(
-        scheme: getIt<LocalInjectableModule>().kSchemeApi,
+        scheme: getIt<LocalInjectableModule>().schemeApi,
         host: getIt<LocalInjectableModule>().hostApi,
         port: getIt<LocalInjectableModule>().portApi,
         path: '/api/v1/user/item/id/$itemId',
@@ -411,7 +410,7 @@ class HomeRepository {
       }
     } catch (e, stackTrace) {
       log(e.toString(), error: e, stackTrace: stackTrace);
-      onError(Failure(message: e.toString()));
+      onError(Failure(message: e.toString(), error: e, stackTrace: stackTrace));
     }
   }
 
@@ -423,16 +422,14 @@ class HomeRepository {
   }) async {
     try {
       final uri = Uri(
-        scheme: getIt<LocalInjectableModule>().kSchemeApi,
+        scheme: getIt<LocalInjectableModule>().schemeApi,
         host: getIt<LocalInjectableModule>().hostApi,
         port: getIt<LocalInjectableModule>().portApi,
         path: '/api/v1/user/fcm',
       );
       final response = await http.get(
         uri,
-        headers: {
-          HttpHeaders.authorizationHeader: token,
-        },
+        headers: {HttpHeaders.authorizationHeader: token},
       );
       final body = jsonDecode(response.body) as Map;
 
@@ -449,7 +446,7 @@ class HomeRepository {
       }
     } catch (e, stackTrace) {
       log(e.toString(), error: e, stackTrace: stackTrace);
-      onError(Failure(message: e.toString()));
+      onError(Failure(message: e.toString(), error: e, stackTrace: stackTrace));
     }
   }
 }

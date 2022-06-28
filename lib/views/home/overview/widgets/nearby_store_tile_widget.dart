@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_restaurant/models/nearby_store.dart';
+import 'package:flutter_restaurant/models/home/nearby_store.dart';
+import 'package:flutter_restaurant/views/core/misc/constants.dart';
 import 'package:flutter_restaurant/views/core/widgets/nullable_network_image.dart';
 
 class NearbyStoreTile extends StatelessWidget {
@@ -14,13 +15,12 @@ class NearbyStoreTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: Theme.of(context).colorScheme.surfaceVariant,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(16)),
-      ),
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
+    return Card(
       child: InkWell(
-        borderRadius: const BorderRadius.all(Radius.circular(16)),
+        borderRadius: const BorderRadius.all(Radius.circular(kBorderRadius)),
         onTap: onTap,
         child: Container(
           width: 140,
@@ -29,23 +29,24 @@ class NearbyStoreTile extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               NullableNetworkImage(
-                imageUrl: nearbyStore.banner,
-                aspectRatio: 1 / 1,
+                imageUrl: nearbyStore.image,
               ),
               const SizedBox(height: 8),
               Text(
                 nearbyStore.name,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: Theme.of(context).textTheme.subtitle2,
+                style: textTheme.titleSmall
+                    ?.copyWith(color: colorScheme.onSurfaceVariant),
               ),
               const SizedBox(height: 4),
               Text(
                 // TODO: translate
-                nearbyStore.description ?? 'No description',
+                '${nearbyStore.distance.toStringAsFixed(2)} km',
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: Theme.of(context).textTheme.caption,
+                style:
+                    textTheme.bodySmall?.copyWith(color: colorScheme.outline),
               ),
               const SizedBox(height: 4),
               Row(
@@ -53,12 +54,16 @@ class NearbyStoreTile extends StatelessWidget {
                   Icon(
                     Icons.star_rounded,
                     size: 20,
-                    color: Theme.of(context).colorScheme.secondary,
+                    color: colorScheme.secondary,
                   ),
                   const SizedBox(width: 4),
                   // TODO: translate
-                  Text(nearbyStore.rating?.toStringAsPrecision(3) ??
-                      'No rating'),
+                  Text(
+                    nearbyStore.rating?.toStringAsPrecision(3) ?? 'No rating',
+                    style: textTheme.labelMedium?.copyWith(
+                      color: colorScheme.onSurfaceVariant,
+                    ),
+                  ),
                 ],
               ),
             ],

@@ -1,7 +1,7 @@
 import 'package:injectable/injectable.dart';
 
 abstract class LocalInjectableModule {
-  String get kSchemeApi;
+  String get schemeApi;
   String get hostApi;
   int get portApi;
   String get mapsApiKey;
@@ -11,7 +11,7 @@ abstract class LocalInjectableModule {
 @Injectable(as: LocalInjectableModule)
 class DevModule extends LocalInjectableModule {
   @override
-  String get kSchemeApi => 'https';
+  String get schemeApi => 'https';
 
   @override
   String hostApi = 'azlir-restaurant-api.herokuapp.com';
@@ -20,14 +20,14 @@ class DevModule extends LocalInjectableModule {
   int portApi = 80;
 
   @override
-  String mapsApiKey = 'AIzaSyC9vJ0ihIE4qnqRPlpE8xgOfoFIjEbH5NE';
+  String mapsApiKey = 'AIzaSyBC1ogdklGgz86CdT6ylaOW4obelcFt7qc';
 }
 
 @dev
 @Injectable(as: LocalInjectableModule)
 class ProdModule extends LocalInjectableModule {
   @override
-  String get kSchemeApi => 'http';
+  String get schemeApi => 'http';
 
   @override
   String hostApi = 'localhost';
@@ -36,5 +36,5 @@ class ProdModule extends LocalInjectableModule {
   int portApi = 8080;
 
   @override
-  String mapsApiKey = 'AIzaSyDUkKN4c_ufoXrBU639kmQT3D7lIUMpF9s';
+  String mapsApiKey = 'AIzaSyBC1ogdklGgz86CdT6ylaOW4obelcFt7qc';
 }

@@ -1,8 +1,8 @@
 part of 'overview_cubit.dart';
 
 @immutable
-class HomeState extends Equatable {
-  const HomeState({
+class OverviewState extends Equatable {
+  const OverviewState({
     required this.selectedCategory,
     this.failureOrNearbyStores,
     this.failureOrSpecialOffers,
@@ -12,26 +12,26 @@ class HomeState extends Equatable {
 
   final ItemCategory? selectedCategory;
   final Either<Failure, List<NearbyStore>>? failureOrNearbyStores;
-  final Either<Failure, List<Item>>? failureOrSpecialOffers;
+  final Either<Failure, List<SpecialOffer>>? failureOrSpecialOffers;
   final Failure? failure;
   final bool isLoading;
 
   static const _defaultFailure = Failure(message: '');
 
-  factory HomeState.initial() => const HomeState(
+  factory OverviewState.initial() => const OverviewState(
         selectedCategory: null,
         failure: null,
         isLoading: false,
       );
 
-  HomeState copyWith({
+  OverviewState copyWith({
     ItemCategory? selectedCategory = const ItemCategory(id: '', name: ''),
     Option<Either<Failure, List<NearbyStore>>?>? failureOrNearbyStores,
-    Option<Either<Failure, List<Item>>?>? failureOrSpecialOffers,
+    Option<Either<Failure, List<SpecialOffer>>?>? failureOrSpecialOffers,
     Failure? failure = _defaultFailure,
     bool? isLoading,
   }) {
-    return HomeState(
+    return OverviewState(
       selectedCategory: selectedCategory == const ItemCategory(id: '', name: '')
           ? this.selectedCategory
           : selectedCategory,

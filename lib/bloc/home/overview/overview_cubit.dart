@@ -3,9 +3,9 @@ import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart' hide Category;
 import 'package:flutter_restaurant/bloc/core/failure.dart';
-import 'package:flutter_restaurant/models/item.dart';
-import 'package:flutter_restaurant/models/item_category.dart';
-import 'package:flutter_restaurant/models/nearby_store.dart';
+import 'package:flutter_restaurant/models/home/nearby_store.dart';
+import 'package:flutter_restaurant/models/home/special_offer.dart';
+import 'package:flutter_restaurant/models/item/item_category.dart';
 import 'package:flutter_restaurant/repositories/home_repository.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:injectable/injectable.dart';
@@ -13,10 +13,10 @@ import 'package:injectable/injectable.dart';
 part 'overview_state.dart';
 
 @injectable
-class HomeCubit extends Cubit<HomeState> {
-  HomeCubit(
+class OverviewCubit extends Cubit<OverviewState> {
+  OverviewCubit(
     this._homeRepository,
-  ) : super(HomeState.initial());
+  ) : super(OverviewState.initial());
 
   final HomeRepository _homeRepository;
 
@@ -39,7 +39,7 @@ class HomeCubit extends Cubit<HomeState> {
       ),
     );
     await _homeRepository.determinePosition(
-      onCompleted: (position) async {
+      onCompleted: (position) {
         onCompleted(position);
         emit(state.copyWith(isLoading: false));
       },

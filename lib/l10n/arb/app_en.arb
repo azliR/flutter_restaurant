@@ -9,6 +9,29 @@
     "introLetsGetStarted": "Let's Get Started",
     "introSkip": "skip",
     "introNext": "Next",
+    "signInSkip": "SKIP",
+    "signInLoginTab": "LOG IN",
+    "signInSignUpTab": "SIGN UP",
+    "signInFullNameHint": "Full Name",
+    "signInPhoneNumberHint": "Phone Number",
+    "signInAgreement": "I agree to the ",
+    "signInTermAndService": "terms of service",
+    "signInContinueButton": "Continue",
+    "signInVerify": "We will send an OTP to verify it is you",
+    "signInSignUpWith": "Sign Up with",
+    "signInLoginWith": "Log In with",
+    "signInNeedAgreeError": "You need to agree with our term of service!",
+    "otpTitle": "Enter OTP",
+    "otpSubtitle": "We have sent a one time password to your mobile number",
+    "otpEnterOtpHint": "Enter OTP",
+    "otpResendOtpButton": "Resend OTP",
+    "otpResendIn": "Resend in {second} s",
+    "@otpResendIn": {
+        "placeholders": {
+            "second": {}
+        }
+    },
+    "otpLoginButton": "Login",
     "phoneValidationPhoneLabel": "Nomor telepon",
     "phoneValidationPhoneEmpty": "Silahkan masukkan nomor telepon Anda",
     "phoneValidationPhoneStartsWith": "Nomor telepon harus dimulai dengan 08",
@@ -24,8 +47,10 @@
     "homeTabsOrders": "Orders",
     "homeTabsCart": "Cart",
     "homeTabsAccount": "Account",
-    "homeExploreNearby": "EXPLORE NEARBY",
-    "homeSpecialOffers": "SPECIAL OFFERS",
+    "homeNearbyTitle": "Local resto nearby",
+    "homeNearbySubtitle": "Try these restaurants nearby.",
+    "homeSpecialOffersTitle": "Special for you!",
+    "homeSpecialOffersSubtitle": "Check out our menus on promo today!",
     "homeMostPopular": "MOST POPULAR",
     "homeCurrentLocation": "Current Location",
     "homeLocationAccessTitle": "Allow access to your location to see nearby restaurants",
@@ -74,13 +99,13 @@
     "cartMinutes": "minutes",
     "cartMinutesShort": "min",
     "cartCheckout": "CHECKOUT",
-    "cartItems": "ITEMS: {length}",
+    "cartItems": "{length} items",
     "@cartItems": {
         "placeholders": {
             "length": {}
         }
     },
-    "cartApplyCoupon": "Apply Coupon",
+    "cartApplyCoupon": "Apply coupon",
     "cartApplyCouponHint": "Coupon code",
     "cartVerifyCoupon": "Verify",
     "cartSubtotal": "Subtotal",

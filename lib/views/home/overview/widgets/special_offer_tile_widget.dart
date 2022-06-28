@@ -1,26 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_restaurant/models/item.dart';
+import 'package:flutter_restaurant/models/home/special_offer.dart';
+import 'package:flutter_restaurant/views/core/misc/constants.dart';
+import 'package:flutter_restaurant/views/core/misc/utils.dart';
 import 'package:flutter_restaurant/views/core/widgets/nullable_network_image.dart';
 
 class SpecialOfferTile extends StatelessWidget {
   const SpecialOfferTile({
     Key? key,
-    required this.item,
+    required this.specialOffer,
     required this.onTap,
   }) : super(key: key);
 
-  final Item item;
+  final SpecialOffer specialOffer;
   final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: Theme.of(context).colorScheme.surfaceVariant,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(16)),
-      ),
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
+    return Card(
       child: InkWell(
-        borderRadius: const BorderRadius.all(Radius.circular(16)),
+        borderRadius: const BorderRadius.all(Radius.circular(kBorderRadius)),
         onTap: onTap,
         child: SizedBox(
           width: 160,
@@ -28,28 +29,62 @@ class SpecialOfferTile extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               NullableNetworkImage(
-                imageUrl: item.picture,
+                imageUrl: specialOffer.picture,
                 aspectRatio: 4 / 3,
               ),
-              Padding(
-                padding: const EdgeInsets.all(8),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      item.name,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).textTheme.titleSmall,
-                    ),
-                    const SizedBox(height: 6),
-                    Text(
-                      '${(100 * (item.specialOffer! - item.price) / item.price).toStringAsFixed(0)}% OFF',
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).textTheme.titleSmall,
-                    ),
-                  ],
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(12),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        specialOffer.name,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: textTheme.titleSmall
+                            ?.copyWith(color: colorScheme.onSurfaceVariant),
+                      ),
+                      const SizedBox(height: 6),
+                      const Spacer(),
+                      Text(
+                        formatCurrency(specialOffer.specialOffer),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: textTheme.labelLarge?.copyWith(
+                          color: colorScheme.onSurfaceVariant,
+                        ),
+                      ),
+                      const SizedBox(height: 2),
+                      Row(
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.all(4),
+                            decoration: BoxDecoration(
+                              color: colorScheme.primaryContainer,
+                              borderRadius: BorderRadius.circular(4),
+                            ),
+                            child: Text(
+                              '${(100 * (specialOffer.price - specialOffer.specialOffer) / specialOffer.price).toStringAsFixed(0)}%',
+                              style: textTheme.caption?.copyWith(
+                                color: colorScheme.onPrimaryContainer,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 4),
+                          Text(
+                            formatCurrency(specialOffer.price),
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: textTheme.bodySmall?.copyWith(
+                              decoration: TextDecoration.lineThrough,
+                              color: colorScheme.outline,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],

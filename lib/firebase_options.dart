@@ -30,15 +30,9 @@ class DefaultFirebaseOptions {
           'you can reconfigure this by running the FlutterFire CLI again.',
         );
       case TargetPlatform.windows:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for windows - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return windows;
       case TargetPlatform.linux:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for linux - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return linux;
       default:
         throw UnsupportedError(
           'DefaultFirebaseOptions are not supported for this platform.',
@@ -70,7 +64,28 @@ class DefaultFirebaseOptions {
     messagingSenderId: '604627191517',
     projectId: 'restaurant-70076',
     storageBucket: 'restaurant-70076.appspot.com',
+    androidClientId: '604627191517-30av0r43v5ivgm1627ocert4fno5711e.apps.googleusercontent.com',
     iosClientId: '604627191517-b2sq4ie2jrej0jgoih6ioep9vrbigk6v.apps.googleusercontent.com',
     iosBundleId: 'com.azlir.restaurant',
+  );
+
+  static const FirebaseOptions windows = FirebaseOptions(
+    apiKey: 'AIzaSyBC1ogdklGgz86CdT6ylaOW4obelcFt7qc',
+    appId: '1:604627191517:web:5dc6648af62d8555307d34',
+    messagingSenderId: '604627191517',
+    projectId: 'restaurant-70076',
+    authDomain: 'restaurant-70076.firebaseapp.com',
+    storageBucket: 'restaurant-70076.appspot.com',
+    measurementId: 'G-5LZXDZZPVP',
+  );
+
+  static const FirebaseOptions linux = FirebaseOptions(
+    apiKey: 'AIzaSyBC1ogdklGgz86CdT6ylaOW4obelcFt7qc',
+    appId: '1:604627191517:web:c493445fc0892a11307d34',
+    messagingSenderId: '604627191517',
+    projectId: 'restaurant-70076',
+    authDomain: 'restaurant-70076.firebaseapp.com',
+    storageBucket: 'restaurant-70076.appspot.com',
+    measurementId: 'G-8LNVQTVZFS',
   );
 }

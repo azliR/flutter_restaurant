@@ -7,7 +7,6 @@
 
 import 'dart:async';
 import 'dart:developer';
-import 'dart:io';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
@@ -16,7 +15,6 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_restaurant/firebase_options.dart';
 import 'package:flutter_restaurant/injection.dart';
 import 'package:flutterfire_ui/auth.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart' as path;
 
@@ -35,48 +33,36 @@ class AppBlocObserver extends BlocObserver {
 }
 
 Future<void> bootstrap(FutureOr<Widget> Function() builder, String env) async {
-  final widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
-  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
-
-  configureInjection(env);
-
-  if (defaultTargetPlatform == TargetPlatform.android) {
-    AndroidGoogleMapsFlutter.useAndroidViewSurface = true;
-  }
-
-  if (kIsWeb) {
-    await Firebase.initializeApp(
-      options: DefaultFirebaseOptions.currentPlatform,
-    );
-    FlutterFireUIAuth.configureProviders([
-      const PhoneProviderConfiguration(),
-    ]);
-  } else if (Platform.isAndroid || Platform.isIOS) {
-    await Firebase.initializeApp(
-      options: DefaultFirebaseOptions.currentPlatform,
-    );
-    FlutterFireUIAuth.configureProviders([
-      const PhoneProviderConfiguration(),
-    ]);
-  }
-
-  FlutterError.onError = (details) {
-    log(details.exceptionAsString(), stackTrace: details.stack);
-  };
-
-  final storage = await HydratedStorage.build(
-    storageDirectory: kIsWeb
-        ? HydratedStorage.webStorageDirectory
-        : await path.getApplicationDocumentsDirectory(),
-  );
-
-  FlutterNativeSplash.remove();
   await runZonedGuarded(
     () async {
       await HydratedBlocOverrides.runZoned(
         () async => runApp(await builder()),
         blocObserver: AppBlocObserver(),
-        storage: storage,
+        createStorage: () async {
+          final widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+          FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+
+          configureInjection(env);
+
+          await Firebase.initializeApp(
+            options: DefaultFirebaseOptions.currentPlatform,
+          );
+          FlutterFireUIAuth.configureProviders([
+            const PhoneProviderConfiguration(),
+          ]);
+
+          FlutterError.onError = (details) {
+            log(details.exceptionAsString(), stackTrace: details.stack);
+          };
+
+          FlutterNativeSplash.remove();
+
+          return HydratedStorage.build(
+            storageDirectory: kIsWeb
+                ? HydratedStorage.webStorageDirectory
+                : await path.getApplicationSupportDirectory(),
+          );
+        },
       );
     },
     (error, stackTrace) => log(error.toString(), stackTrace: stackTrace),
