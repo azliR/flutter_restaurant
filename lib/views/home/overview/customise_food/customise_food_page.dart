@@ -114,7 +114,6 @@ class _CustomiseFoodPageState extends State<CustomiseFoodPage> {
     final textTheme = Theme.of(context).textTheme;
     final colorScheme = Theme.of(context).colorScheme;
     final cubit = context.read<CustomiseFoodCubit>();
-
     return BlocBuilder<CustomiseFoodCubit, CustomiseFoodState>(
       buildWhen: (previous, current) =>
           previous.isLoading != current.isLoading ||
@@ -150,68 +149,96 @@ class _CustomiseFoodPageState extends State<CustomiseFoodPage> {
             ),
             child: Padding(
               padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Wrap(
-                    alignment: WrapAlignment.end,
-                    runAlignment: WrapAlignment.center,
-                    crossAxisAlignment: WrapCrossAlignment.center,
-                    spacing: 8,
-                    runSpacing: 4,
-                    children: [
-                      Text(
-                        context.l10n.customiseOrderQuantity,
-                        style: textTheme.titleMedium?.copyWith(
-                          color: colorScheme.onBackground,
+              child: SizedBox(
+                width: double.infinity,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          context.l10n.customiseOrderQuantity,
+                          style: textTheme.titleMedium?.copyWith(
+                            color: colorScheme.onBackground,
+                          ),
                         ),
-                      ),
-                      TextButton(
-                        style: TextButton.styleFrom(
-                          backgroundColor: colorScheme.surfaceVariant,
+                        const SizedBox(width: 8),
+                        TextButton(
+                          style: TextButton.styleFrom(
+                            backgroundColor: colorScheme.surfaceVariant,
+                            minimumSize: MediaQuery.of(context).size.width <
+                                    kMobileBreakpoint
+                                ? Size.zero
+                                : null,
+                            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                          ),
+                          onPressed: () => cubit.minusQuantity(),
+                          child: Icon(
+                            Icons.remove_rounded,
+                            size: MediaQuery.of(context).size.width <
+                                    kMobileBreakpoint
+                                ? 16
+                                : null,
+                          ),
                         ),
-                        onPressed: () => cubit.minusQuantity(),
-                        child: const Icon(Icons.remove_rounded),
-                      ),
-                      BlocSelector<CustomiseFoodCubit, CustomiseFoodState, int>(
-                        selector: (state) => state.quantity,
-                        builder: (context, quantity) {
-                          return Text(
-                            quantity.toString(),
-                            style: textTheme.bodyMedium?.copyWith(
-                              color: colorScheme.onBackground,
-                            ),
-                          );
-                        },
-                      ),
-                      TextButton(
-                        style: TextButton.styleFrom(
-                          backgroundColor: colorScheme.surfaceVariant,
+                        const SizedBox(width: 8),
+                        BlocSelector<CustomiseFoodCubit, CustomiseFoodState,
+                            int>(
+                          selector: (state) => state.quantity,
+                          builder: (context, quantity) {
+                            return Text(
+                              quantity.toString(),
+                              style: textTheme.bodyMedium?.copyWith(
+                                color: colorScheme.onBackground,
+                              ),
+                            );
+                          },
                         ),
-                        onPressed: () => cubit.addQuantity(),
-                        child: const Icon(Icons.add_rounded),
-                      ),
-                      const Spacer(),
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          padding: const EdgeInsets.all(16),
-                          primary: colorScheme.primary,
-                          onPrimary: colorScheme.onPrimary,
+                        const SizedBox(width: 8),
+                        TextButton(
+                          style: TextButton.styleFrom(
+                            backgroundColor: colorScheme.surfaceVariant,
+                            minimumSize: MediaQuery.of(context).size.width <
+                                    kMobileBreakpoint
+                                ? Size.zero
+                                : null,
+                            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                          ),
+                          onPressed: () => cubit.addQuantity(),
+                          child: Icon(
+                            Icons.add_rounded,
+                            size: MediaQuery.of(context).size.width <
+                                    kMobileBreakpoint
+                                ? 16
+                                : null,
+                          ),
                         ),
-                        onPressed: () => _onAddToCart(context, state.item!),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Text(context.l10n.customiseFoodAddToCart),
-                            const SizedBox(width: 8),
-                            const Icon(Icons.add_shopping_cart_rounded),
-                          ],
-                        ),
+                      ],
+                    ),
+                    const Spacer(),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        padding: const EdgeInsets.all(16),
+                        primary: colorScheme.primary,
+                        onPrimary: colorScheme.onPrimary,
                       ),
-                    ],
-                  ),
-                ],
+                      onPressed: () {
+                        if (state.item != null) {
+                          _onAddToCart(context, state.item!);
+                        }
+                      },
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(context.l10n.customiseFoodAddToCart),
+                          const SizedBox(width: 8),
+                          const Icon(Icons.add_shopping_cart_rounded),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

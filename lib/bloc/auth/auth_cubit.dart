@@ -120,6 +120,8 @@ class AuthCubit extends HydratedCubit<AuthState> {
           );
         },
       );
+    } else {
+      onComplete(state.userData!);
     }
   }
 

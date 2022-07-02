@@ -123,7 +123,7 @@ class _OverviewPageState extends State<OverviewPage> {
         setState(() => isDialogOpen = false);
         prefCubit.setFirstLaunch();
       } else {
-        await context.read<OverviewCubit>().determinePosition(
+        context.read<OverviewCubit>().determinePosition(
           onCompleted: (position) {
             prefCubit.setLocation(position);
           },
@@ -132,6 +132,19 @@ class _OverviewPageState extends State<OverviewPage> {
     });
     super.initState();
   }
+
+  // @override
+  // void didChangeDependencies() {
+  //   final prefCubit = context.read<PreferencesCubit>();
+  //   if (isDialogOpen) {
+  //      context.read<OverviewCubit>().determinePosition(
+  //         onCompleted: (position) {
+  //           prefCubit.setLocation(position);
+  //         },
+  //       );
+  //   }
+  //   super.didChangeDependencies();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -397,6 +410,7 @@ class _NoLocationErrorWidget extends StatelessWidget {
             const SizedBox(height: 24),
             ElevatedButton(
               onPressed: () {
+                print(cubit.state);
                 cubit.determinePosition(
                   onCompleted: (position) {
                     context.read<PreferencesCubit>().setLocation(position);
