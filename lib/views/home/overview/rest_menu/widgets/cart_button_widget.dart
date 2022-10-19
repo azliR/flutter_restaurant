@@ -6,10 +6,10 @@ import 'package:kt_dart/kt.dart';
 
 class CartButton extends StatelessWidget {
   const CartButton({
-    Key? key,
+    super.key,
     required this.carts,
     required this.onPressed,
-  }) : super(key: key);
+  });
 
   final KtList<Cart> carts;
   final VoidCallback onPressed;
@@ -53,9 +53,7 @@ class CartButton extends StatelessWidget {
             const Spacer(),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
-                padding: const EdgeInsets.all(16),
-                primary: colorScheme.primary,
-                onPrimary: colorScheme.onPrimary,
+                foregroundColor: colorScheme.onPrimary, padding: const EdgeInsets.all(16), backgroundColor: colorScheme.primary,
               ),
               onPressed: onPressed,
               child: Row(

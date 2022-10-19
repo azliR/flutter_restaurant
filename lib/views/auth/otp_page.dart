@@ -9,10 +9,10 @@ import 'package:flutter_restaurant/views/core/widgets/auth_consumer.dart';
 
 class OtpPage extends StatefulWidget {
   const OtpPage({
-    Key? key,
+    super.key,
     required this.onCompleted,
     required this.phoneNumber,
-  }) : super(key: key);
+  });
 
   final VoidCallback? onCompleted;
 
@@ -154,8 +154,7 @@ class _OtpPageState extends State<OtpPage> {
                       width: double.infinity,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          primary: colorScheme.primary,
-                          onPrimary: colorScheme.onPrimary,
+                          foregroundColor: colorScheme.onPrimary, backgroundColor: colorScheme.primary,
                         ),
                         onPressed: () {
                           context.read<AuthCubit>().verifyOtp(

@@ -11,9 +11,9 @@ import 'package:kt_dart/kt.dart';
 
 class CustomiseFoodBody extends StatelessWidget {
   const CustomiseFoodBody({
-    Key? key,
+    super.key,
     required this.item,
-  }) : super(key: key);
+  });
 
   final Item item;
 

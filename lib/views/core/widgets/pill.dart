@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Pill extends StatelessWidget {
-  const Pill({Key? key}) : super(key: key);
+  const Pill({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -5,10 +5,10 @@ import 'package:flutter_restaurant/views/core/widgets/nullable_network_image.dar
 
 class NearbyStoreTile extends StatelessWidget {
   const NearbyStoreTile({
-    Key? key,
+    super.key,
     required this.nearbyStore,
     required this.onTap,
-  }) : super(key: key);
+  });
 
   final NearbyStore nearbyStore;
   final VoidCallback onTap;

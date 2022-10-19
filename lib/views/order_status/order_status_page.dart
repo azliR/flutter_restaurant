@@ -4,9 +4,9 @@ import 'package:pretty_qr_code/pretty_qr_code.dart';
 
 class OrderStatusPage extends StatelessWidget {
   const OrderStatusPage({
-    Key? key,
+    super.key,
     required this.orderId,
-  }) : super(key: key);
+  });
 
   final String orderId;
 

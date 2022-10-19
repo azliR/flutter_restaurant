@@ -15,9 +15,9 @@ import 'package:kt_dart/kt.dart';
 
 class CustomiseFoodPage extends StatefulWidget implements AutoRouteWrapper {
   const CustomiseFoodPage({
-    Key? key,
+    super.key,
     required this.itemId,
-  }) : super(key: key);
+  });
 
   final String itemId;
 
@@ -219,9 +219,7 @@ class _CustomiseFoodPageState extends State<CustomiseFoodPage> {
                     const Spacer(),
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        padding: const EdgeInsets.all(16),
-                        primary: colorScheme.primary,
-                        onPrimary: colorScheme.onPrimary,
+                        foregroundColor: colorScheme.onPrimary, padding: const EdgeInsets.all(16), backgroundColor: colorScheme.primary,
                       ),
                       onPressed: () {
                         if (state.item != null) {

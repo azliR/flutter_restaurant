@@ -12,7 +12,7 @@ import 'package:flutter_restaurant/views/core/misc/constants.dart';
 import 'package:kt_dart/kt.dart';
 
 class CartBodyLarge extends StatelessWidget {
-  const CartBodyLarge({Key? key}) : super(key: key);
+  const CartBodyLarge({super.key});
 
   @override
   Widget build(BuildContext context) {

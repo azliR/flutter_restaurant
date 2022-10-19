@@ -9,9 +9,9 @@ import 'package:form_field_validator/form_field_validator.dart';
 
 class LoginTabView extends StatefulWidget {
   const LoginTabView({
-    Key? key,
+    super.key,
     required this.onCompleted,
-  }) : super(key: key);
+  });
 
   final VoidCallback? onCompleted;
 
@@ -128,8 +128,7 @@ class _LoginTabViewState extends State<LoginTabView> {
                   width: double.infinity,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      primary: colorScheme.primary,
-                      onPrimary: colorScheme.onPrimary,
+                      foregroundColor: colorScheme.onPrimary, backgroundColor: colorScheme.primary,
                     ),
                     onPressed: () {
                       setState(() => _autovalidate = true);

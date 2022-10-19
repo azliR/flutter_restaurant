@@ -11,7 +11,7 @@ import 'package:flutter_restaurant/views/home/map/widgets/map_card_widget.dart';
 import 'package:syncfusion_flutter_maps/maps.dart';
 
 class MapPage extends StatefulWidget with AutoRouteWrapper {
-  const MapPage({Key? key}) : super(key: key);
+  const MapPage({super.key});
 
   @override
   Widget wrappedRoute(BuildContext context) {

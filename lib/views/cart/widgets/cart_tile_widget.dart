@@ -9,10 +9,10 @@ import 'package:kt_dart/kt.dart';
 
 class CartTile extends StatelessWidget {
   const CartTile({
-    Key? key,
+    super.key,
     required this.cart,
     required this.onItemRemove,
-  }) : super(key: key);
+  });
 
   final Cart cart;
   final VoidCallback onItemRemove;

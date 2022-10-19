@@ -8,10 +8,10 @@ import 'package:flutter_restaurant/views/core/widgets/nullable_network_image.dar
 
 class ItemTile extends StatelessWidget {
   const ItemTile({
-    Key? key,
+    super.key,
     required this.itemByStore,
     required this.storeName,
-  }) : super(key: key);
+  });
 
   final ItemByStore itemByStore;
   final String storeName;

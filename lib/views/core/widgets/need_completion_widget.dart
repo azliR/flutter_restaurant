@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_restaurant/views/home/home_page.dart';
 
 class NeedCompletionWidget extends StatelessWidget {
-  const NeedCompletionWidget({Key? key}) : super(key: key);
+  const NeedCompletionWidget({super.key});
 
   @override
   Widget build(BuildContext context) {

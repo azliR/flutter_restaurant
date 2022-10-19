@@ -5,10 +5,10 @@ class ProgressOverlay extends StatelessWidget {
   final Widget? child;
 
   const ProgressOverlay({
-    Key? key,
+    super.key,
     required this.visible,
     required this.child,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

@@ -4,7 +4,7 @@ import 'package:flutter_restaurant/bloc/cart/cart_cubit.dart';
 import 'package:flutter_restaurant/l10n/l10n.dart';
 
 class CartOrderTitle extends StatelessWidget {
-  const CartOrderTitle({Key? key}) : super(key: key);
+  const CartOrderTitle({super.key});
 
   @override
   Widget build(BuildContext context) {

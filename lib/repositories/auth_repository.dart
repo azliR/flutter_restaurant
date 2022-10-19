@@ -238,7 +238,7 @@ class AuthRepository {
   }) async {
     try {
       await _firebaseAuth.signOut();
-      await HydratedBlocOverrides.current?.storage.clear();
+      await HydratedBloc.storage.clear();
       onCompleted();
     } catch (e, stackTrace) {
       log(e.toString(), error: e, stackTrace: stackTrace);

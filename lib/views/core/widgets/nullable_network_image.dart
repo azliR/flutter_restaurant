@@ -6,13 +6,13 @@ import 'package:flutter_restaurant/views/core/misc/constants.dart';
 
 class NullableNetworkImage extends StatelessWidget {
   const NullableNetworkImage({
-    Key? key,
+    super.key,
     required this.imageUrl,
     this.aspectRatio = 1,
     this.padding,
     this.borderRadius,
     this.placeholderColor,
-  }) : super(key: key);
+  });
 
   final String? imageUrl;
   final double aspectRatio;

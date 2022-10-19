@@ -15,9 +15,9 @@ import 'package:kt_dart/kt.dart';
 
 class RestMenuPage extends StatefulWidget with AutoRouteWrapper {
   const RestMenuPage({
-    Key? key,
+    super.key,
     required this.storeId,
-  }) : super(key: key);
+  });
 
   final String storeId;
 

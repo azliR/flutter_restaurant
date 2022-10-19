@@ -5,7 +5,7 @@ import 'package:flutter_restaurant/models/enums/enums.dart';
 import 'package:flutter_restaurant/views/core/widgets/pill.dart';
 
 class CartPickupTypeTile extends StatelessWidget {
-  const CartPickupTypeTile({Key? key}) : super(key: key);
+  const CartPickupTypeTile({super.key});
 
   Future<PickupType?> _changePickupTypeDialog(
     BuildContext context,

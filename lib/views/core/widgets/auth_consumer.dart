@@ -6,9 +6,9 @@ import 'package:flutter_restaurant/views/core/widgets/progress_overlay.dart';
 
 class AuthBuilder extends StatelessWidget {
   const AuthBuilder({
-    Key? key,
+    super.key,
     required this.child,
-  }) : super(key: key);
+  });
 
   final Widget child;
 
@@ -28,9 +28,9 @@ class AuthBuilder extends StatelessWidget {
 
 class AuthListener extends StatelessWidget {
   const AuthListener({
-    Key? key,
+    super.key,
     required this.child,
-  }) : super(key: key);
+  });
 
   final Widget child;
 

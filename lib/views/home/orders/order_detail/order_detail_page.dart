@@ -10,9 +10,9 @@ import 'package:flutter_restaurant/views/home/orders/order_detail/order_detail_b
 
 class OrderDetailPage extends StatelessWidget implements AutoRouteWrapper {
   const OrderDetailPage({
-    Key? key,
+    super.key,
     required this.orderId,
-  }) : super(key: key);
+  });
 
   final String orderId;
 

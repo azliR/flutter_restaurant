@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:auto_route/empty_router_widgets.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_restaurant/views/auth/otp_page.dart';
 import 'package:flutter_restaurant/views/auth/sign_in_page.dart';

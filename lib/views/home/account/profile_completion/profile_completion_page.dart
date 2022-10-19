@@ -7,7 +7,7 @@ import 'package:flutter_restaurant/views/core/widgets/auth_consumer.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 
 class ProfileCompletionPage extends StatefulWidget {
-  const ProfileCompletionPage({Key? key, this.onComplete}) : super(key: key);
+  const ProfileCompletionPage({super.key, this.onComplete});
 
   final void Function()? onComplete;
 
@@ -70,8 +70,7 @@ class _ProfileCompletionPageState extends State<ProfileCompletionPage> {
                   width: double.infinity,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      primary: colorScheme.primary,
-                      onPrimary: colorScheme.onPrimary,
+                      foregroundColor: colorScheme.onPrimary, backgroundColor: colorScheme.primary,
                     ),
                     onPressed: () async {
                       setState(() {
@@ -101,8 +100,7 @@ class _ProfileCompletionPageState extends State<ProfileCompletionPage> {
                 Center(
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      primary: colorScheme.error,
-                      onPrimary: colorScheme.onPrimary,
+                      foregroundColor: colorScheme.onPrimary, backgroundColor: colorScheme.error,
                     ),
                     onPressed: () => cubit.signOut(),
                     child: const Text('Sign out'),

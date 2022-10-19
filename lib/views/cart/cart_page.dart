@@ -7,8 +7,8 @@ import 'package:flutter_restaurant/views/cart/cart_body_small.dart';
 
 class CartPage extends StatelessWidget {
   const CartPage({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

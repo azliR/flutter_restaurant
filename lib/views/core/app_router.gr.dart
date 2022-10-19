@@ -19,183 +19,305 @@ class _$AppRouter extends RootStackRouter {
   final Map<String, PageFactory> pagesMap = {
     SplashRoute.name: (routeData) {
       return AdaptivePage<dynamic>(
-          routeData: routeData, child: const SplashPage());
+        routeData: routeData,
+        child: const SplashPage(),
+      );
     },
     HomeRoute.name: (routeData) {
       return AdaptivePage<dynamic>(
-          routeData: routeData, child: WrappedRoute(child: const HomePage()));
+        routeData: routeData,
+        child: WrappedRoute(child: const HomePage()),
+      );
     },
     SignInRoute.name: (routeData) {
       final args = routeData.argsAs<SignInRouteArgs>(
           orElse: () => const SignInRouteArgs());
       return AdaptivePage<dynamic>(
-          routeData: routeData,
-          child: SignInPage(key: args.key, onCompleted: args.onCompleted));
+        routeData: routeData,
+        child: SignInPage(
+          key: args.key,
+          onCompleted: args.onCompleted,
+        ),
+      );
     },
     OtpRoute.name: (routeData) {
       final args = routeData.argsAs<OtpRouteArgs>();
       return AdaptivePage<dynamic>(
-          routeData: routeData,
-          child: OtpPage(
-              key: args.key,
-              onCompleted: args.onCompleted,
-              phoneNumber: args.phoneNumber));
+        routeData: routeData,
+        child: OtpPage(
+          key: args.key,
+          onCompleted: args.onCompleted,
+          phoneNumber: args.phoneNumber,
+        ),
+      );
     },
     CartRoute.name: (routeData) {
       return AdaptivePage<dynamic>(
-          routeData: routeData, child: const CartPage());
+        routeData: routeData,
+        child: const CartPage(),
+      );
     },
     ProfileCompletionRoute.name: (routeData) {
       final args = routeData.argsAs<ProfileCompletionRouteArgs>(
           orElse: () => const ProfileCompletionRouteArgs());
       return AdaptivePage<dynamic>(
-          routeData: routeData,
-          child: ProfileCompletionPage(
-              key: args.key, onComplete: args.onComplete));
+        routeData: routeData,
+        child: ProfileCompletionPage(
+          key: args.key,
+          onComplete: args.onComplete,
+        ),
+      );
     },
     OrderStatusRoute.name: (routeData) {
       final args = routeData.argsAs<OrderStatusRouteArgs>();
       return AdaptivePage<dynamic>(
-          routeData: routeData,
-          child: OrderStatusPage(key: args.key, orderId: args.orderId));
+        routeData: routeData,
+        child: OrderStatusPage(
+          key: args.key,
+          orderId: args.orderId,
+        ),
+      );
     },
     OverviewWrapperRoute.name: (routeData) {
       return AdaptivePage<dynamic>(
-          routeData: routeData, child: const EmptyRouterPage());
+        routeData: routeData,
+        child: const EmptyRouterPage(),
+      );
     },
     MapWrapperRoute.name: (routeData) {
       return AdaptivePage<dynamic>(
-          routeData: routeData, child: const EmptyRouterPage());
+        routeData: routeData,
+        child: const EmptyRouterPage(),
+      );
     },
     OrdersWrapperRoute.name: (routeData) {
       return AdaptivePage<dynamic>(
-          routeData: routeData, child: const EmptyRouterPage());
+        routeData: routeData,
+        child: const EmptyRouterPage(),
+      );
     },
     AccountWrapperRoute.name: (routeData) {
       return AdaptivePage<dynamic>(
-          routeData: routeData, child: const EmptyRouterPage());
+        routeData: routeData,
+        child: const EmptyRouterPage(),
+      );
     },
     OverviewRoute.name: (routeData) {
       return AdaptivePage<dynamic>(
-          routeData: routeData,
-          child: WrappedRoute(child: const OverviewPage()));
+        routeData: routeData,
+        child: WrappedRoute(child: const OverviewPage()),
+      );
     },
     RestMenuRoute.name: (routeData) {
       final args = routeData.argsAs<RestMenuRouteArgs>();
       return AdaptivePage<dynamic>(
-          routeData: routeData,
-          child: WrappedRoute(
-              child: RestMenuPage(key: args.key, storeId: args.storeId)));
+        routeData: routeData,
+        child: WrappedRoute(
+            child: RestMenuPage(
+          key: args.key,
+          storeId: args.storeId,
+        )),
+      );
     },
     CustomiseFoodRoute.name: (routeData) {
       final args = routeData.argsAs<CustomiseFoodRouteArgs>();
       return AdaptivePage<dynamic>(
-          routeData: routeData,
-          child: WrappedRoute(
-              child: CustomiseFoodPage(key: args.key, itemId: args.itemId)));
+        routeData: routeData,
+        child: WrappedRoute(
+            child: CustomiseFoodPage(
+          key: args.key,
+          itemId: args.itemId,
+        )),
+      );
     },
     MapRoute.name: (routeData) {
       return AdaptivePage<dynamic>(
-          routeData: routeData, child: WrappedRoute(child: const MapPage()));
+        routeData: routeData,
+        child: WrappedRoute(child: const MapPage()),
+      );
     },
     OrdersRoute.name: (routeData) {
       return AdaptivePage<dynamic>(
-          routeData: routeData, child: WrappedRoute(child: const OrdersPage()));
+        routeData: routeData,
+        child: WrappedRoute(child: const OrdersPage()),
+      );
     },
     OrderDetailRoute.name: (routeData) {
       final args = routeData.argsAs<OrderDetailRouteArgs>();
       return AdaptivePage<dynamic>(
-          routeData: routeData,
-          child: WrappedRoute(
-              child: OrderDetailPage(key: args.key, orderId: args.orderId)));
+        routeData: routeData,
+        child: WrappedRoute(
+            child: OrderDetailPage(
+          key: args.key,
+          orderId: args.orderId,
+        )),
+      );
     },
     AccountRoute.name: (routeData) {
       return AdaptivePage<dynamic>(
-          routeData: routeData, child: const AccountPage());
-    }
+        routeData: routeData,
+        child: const AccountPage(),
+      );
+    },
   };
 
   @override
   List<RouteConfig> get routes => [
-        RouteConfig(SplashRoute.name, path: '/'),
-        RouteConfig(HomeRoute.name, path: '/home', children: [
-          RouteConfig(OverviewWrapperRoute.name,
+        RouteConfig(
+          SplashRoute.name,
+          path: '/',
+        ),
+        RouteConfig(
+          HomeRoute.name,
+          path: '/home',
+          children: [
+            RouteConfig(
+              OverviewWrapperRoute.name,
               path: 'overview',
               parent: HomeRoute.name,
               children: [
-                RouteConfig(OverviewRoute.name,
-                    path: '', parent: OverviewWrapperRoute.name),
-                RouteConfig(RestMenuRoute.name,
-                    path: '', parent: OverviewWrapperRoute.name),
-                RouteConfig(CustomiseFoodRoute.name,
-                    path: '', parent: OverviewWrapperRoute.name),
-                RouteConfig('*#redirect',
-                    path: '*',
-                    parent: OverviewWrapperRoute.name,
-                    redirectTo: '',
-                    fullMatch: true)
-              ]),
-          RouteConfig(MapWrapperRoute.name,
+                RouteConfig(
+                  OverviewRoute.name,
+                  path: '',
+                  parent: OverviewWrapperRoute.name,
+                ),
+                RouteConfig(
+                  RestMenuRoute.name,
+                  path: '',
+                  parent: OverviewWrapperRoute.name,
+                ),
+                RouteConfig(
+                  CustomiseFoodRoute.name,
+                  path: '',
+                  parent: OverviewWrapperRoute.name,
+                ),
+                RouteConfig(
+                  '*#redirect',
+                  path: '*',
+                  parent: OverviewWrapperRoute.name,
+                  redirectTo: '',
+                  fullMatch: true,
+                ),
+              ],
+            ),
+            RouteConfig(
+              MapWrapperRoute.name,
               path: 'map',
               parent: HomeRoute.name,
               children: [
-                RouteConfig(MapRoute.name,
-                    path: '', parent: MapWrapperRoute.name),
-                RouteConfig(RestMenuRoute.name,
-                    path: '', parent: MapWrapperRoute.name),
-                RouteConfig(CustomiseFoodRoute.name,
-                    path: '', parent: MapWrapperRoute.name),
-                RouteConfig('*#redirect',
-                    path: '*',
-                    parent: MapWrapperRoute.name,
-                    redirectTo: '',
-                    fullMatch: true)
-              ]),
-          RouteConfig(OrdersWrapperRoute.name,
+                RouteConfig(
+                  MapRoute.name,
+                  path: '',
+                  parent: MapWrapperRoute.name,
+                ),
+                RouteConfig(
+                  RestMenuRoute.name,
+                  path: '',
+                  parent: MapWrapperRoute.name,
+                ),
+                RouteConfig(
+                  CustomiseFoodRoute.name,
+                  path: '',
+                  parent: MapWrapperRoute.name,
+                ),
+                RouteConfig(
+                  '*#redirect',
+                  path: '*',
+                  parent: MapWrapperRoute.name,
+                  redirectTo: '',
+                  fullMatch: true,
+                ),
+              ],
+            ),
+            RouteConfig(
+              OrdersWrapperRoute.name,
               path: 'orders',
               parent: HomeRoute.name,
               children: [
-                RouteConfig(OrdersRoute.name,
-                    path: '', parent: OrdersWrapperRoute.name),
-                RouteConfig(OrderDetailRoute.name,
-                    path: '', parent: OrdersWrapperRoute.name),
-                RouteConfig('*#redirect',
-                    path: '*',
-                    parent: OrdersWrapperRoute.name,
-                    redirectTo: '',
-                    fullMatch: true)
-              ]),
-          RouteConfig(AccountWrapperRoute.name,
+                RouteConfig(
+                  OrdersRoute.name,
+                  path: '',
+                  parent: OrdersWrapperRoute.name,
+                ),
+                RouteConfig(
+                  OrderDetailRoute.name,
+                  path: '',
+                  parent: OrdersWrapperRoute.name,
+                ),
+                RouteConfig(
+                  '*#redirect',
+                  path: '*',
+                  parent: OrdersWrapperRoute.name,
+                  redirectTo: '',
+                  fullMatch: true,
+                ),
+              ],
+            ),
+            RouteConfig(
+              AccountWrapperRoute.name,
               path: 'my',
               parent: HomeRoute.name,
               children: [
-                RouteConfig(AccountRoute.name,
-                    path: '', parent: AccountWrapperRoute.name),
-                RouteConfig('*#redirect',
-                    path: '*',
-                    parent: AccountWrapperRoute.name,
-                    redirectTo: '',
-                    fullMatch: true)
-              ]),
-          RouteConfig('*#redirect',
+                RouteConfig(
+                  AccountRoute.name,
+                  path: '',
+                  parent: AccountWrapperRoute.name,
+                ),
+                RouteConfig(
+                  '*#redirect',
+                  path: '*',
+                  parent: AccountWrapperRoute.name,
+                  redirectTo: '',
+                  fullMatch: true,
+                ),
+              ],
+            ),
+            RouteConfig(
+              '*#redirect',
               path: '*',
               parent: HomeRoute.name,
               redirectTo: 'overview',
-              fullMatch: true)
-        ]),
-        RouteConfig(SignInRoute.name, path: '/signin'),
-        RouteConfig(OtpRoute.name, path: '/otp'),
-        RouteConfig(CartRoute.name, path: '/cart'),
-        RouteConfig(ProfileCompletionRoute.name, path: '/completion'),
-        RouteConfig(OrderStatusRoute.name, path: '/order-status'),
-        RouteConfig('*#redirect', path: '*', redirectTo: '/', fullMatch: true)
+              fullMatch: true,
+            ),
+          ],
+        ),
+        RouteConfig(
+          SignInRoute.name,
+          path: '/signin',
+        ),
+        RouteConfig(
+          OtpRoute.name,
+          path: '/otp',
+        ),
+        RouteConfig(
+          CartRoute.name,
+          path: '/cart',
+        ),
+        RouteConfig(
+          ProfileCompletionRoute.name,
+          path: '/completion',
+        ),
+        RouteConfig(
+          OrderStatusRoute.name,
+          path: '/order-status',
+        ),
+        RouteConfig(
+          '*#redirect',
+          path: '*',
+          redirectTo: '/',
+          fullMatch: true,
+        ),
       ];
 }
 
 /// generated route for
 /// [SplashPage]
 class SplashRoute extends PageRouteInfo<void> {
-  const SplashRoute() : super(SplashRoute.name, path: '/');
+  const SplashRoute()
+      : super(
+          SplashRoute.name,
+          path: '/',
+        );
 
   static const String name = 'SplashRoute';
 }
@@ -204,7 +326,11 @@ class SplashRoute extends PageRouteInfo<void> {
 /// [HomePage]
 class HomeRoute extends PageRouteInfo<void> {
   const HomeRoute({List<PageRouteInfo>? children})
-      : super(HomeRoute.name, path: '/home', initialChildren: children);
+      : super(
+          HomeRoute.name,
+          path: '/home',
+          initialChildren: children,
+        );
 
   static const String name = 'HomeRoute';
 }
@@ -212,16 +338,26 @@ class HomeRoute extends PageRouteInfo<void> {
 /// generated route for
 /// [SignInPage]
 class SignInRoute extends PageRouteInfo<SignInRouteArgs> {
-  SignInRoute({Key? key, void Function()? onCompleted})
-      : super(SignInRoute.name,
-            path: '/signin',
-            args: SignInRouteArgs(key: key, onCompleted: onCompleted));
+  SignInRoute({
+    Key? key,
+    void Function()? onCompleted,
+  }) : super(
+          SignInRoute.name,
+          path: '/signin',
+          args: SignInRouteArgs(
+            key: key,
+            onCompleted: onCompleted,
+          ),
+        );
 
   static const String name = 'SignInRoute';
 }
 
 class SignInRouteArgs {
-  const SignInRouteArgs({this.key, this.onCompleted});
+  const SignInRouteArgs({
+    this.key,
+    this.onCompleted,
+  });
 
   final Key? key;
 
@@ -236,21 +372,29 @@ class SignInRouteArgs {
 /// generated route for
 /// [OtpPage]
 class OtpRoute extends PageRouteInfo<OtpRouteArgs> {
-  OtpRoute(
-      {Key? key,
-      required void Function()? onCompleted,
-      required String phoneNumber})
-      : super(OtpRoute.name,
-            path: '/otp',
-            args: OtpRouteArgs(
-                key: key, onCompleted: onCompleted, phoneNumber: phoneNumber));
+  OtpRoute({
+    Key? key,
+    required void Function()? onCompleted,
+    required String phoneNumber,
+  }) : super(
+          OtpRoute.name,
+          path: '/otp',
+          args: OtpRouteArgs(
+            key: key,
+            onCompleted: onCompleted,
+            phoneNumber: phoneNumber,
+          ),
+        );
 
   static const String name = 'OtpRoute';
 }
 
 class OtpRouteArgs {
-  const OtpRouteArgs(
-      {this.key, required this.onCompleted, required this.phoneNumber});
+  const OtpRouteArgs({
+    this.key,
+    required this.onCompleted,
+    required this.phoneNumber,
+  });
 
   final Key? key;
 
@@ -267,7 +411,11 @@ class OtpRouteArgs {
 /// generated route for
 /// [CartPage]
 class CartRoute extends PageRouteInfo<void> {
-  const CartRoute() : super(CartRoute.name, path: '/cart');
+  const CartRoute()
+      : super(
+          CartRoute.name,
+          path: '/cart',
+        );
 
   static const String name = 'CartRoute';
 }
@@ -275,16 +423,26 @@ class CartRoute extends PageRouteInfo<void> {
 /// generated route for
 /// [ProfileCompletionPage]
 class ProfileCompletionRoute extends PageRouteInfo<ProfileCompletionRouteArgs> {
-  ProfileCompletionRoute({Key? key, void Function()? onComplete})
-      : super(ProfileCompletionRoute.name,
-            path: '/completion',
-            args: ProfileCompletionRouteArgs(key: key, onComplete: onComplete));
+  ProfileCompletionRoute({
+    Key? key,
+    void Function()? onComplete,
+  }) : super(
+          ProfileCompletionRoute.name,
+          path: '/completion',
+          args: ProfileCompletionRouteArgs(
+            key: key,
+            onComplete: onComplete,
+          ),
+        );
 
   static const String name = 'ProfileCompletionRoute';
 }
 
 class ProfileCompletionRouteArgs {
-  const ProfileCompletionRouteArgs({this.key, this.onComplete});
+  const ProfileCompletionRouteArgs({
+    this.key,
+    this.onComplete,
+  });
 
   final Key? key;
 
@@ -299,16 +457,26 @@ class ProfileCompletionRouteArgs {
 /// generated route for
 /// [OrderStatusPage]
 class OrderStatusRoute extends PageRouteInfo<OrderStatusRouteArgs> {
-  OrderStatusRoute({Key? key, required String orderId})
-      : super(OrderStatusRoute.name,
-            path: '/order-status',
-            args: OrderStatusRouteArgs(key: key, orderId: orderId));
+  OrderStatusRoute({
+    Key? key,
+    required String orderId,
+  }) : super(
+          OrderStatusRoute.name,
+          path: '/order-status',
+          args: OrderStatusRouteArgs(
+            key: key,
+            orderId: orderId,
+          ),
+        );
 
   static const String name = 'OrderStatusRoute';
 }
 
 class OrderStatusRouteArgs {
-  const OrderStatusRouteArgs({this.key, required this.orderId});
+  const OrderStatusRouteArgs({
+    this.key,
+    required this.orderId,
+  });
 
   final Key? key;
 
@@ -324,8 +492,11 @@ class OrderStatusRouteArgs {
 /// [EmptyRouterPage]
 class OverviewWrapperRoute extends PageRouteInfo<void> {
   const OverviewWrapperRoute({List<PageRouteInfo>? children})
-      : super(OverviewWrapperRoute.name,
-            path: 'overview', initialChildren: children);
+      : super(
+          OverviewWrapperRoute.name,
+          path: 'overview',
+          initialChildren: children,
+        );
 
   static const String name = 'OverviewWrapperRoute';
 }
@@ -334,7 +505,11 @@ class OverviewWrapperRoute extends PageRouteInfo<void> {
 /// [EmptyRouterPage]
 class MapWrapperRoute extends PageRouteInfo<void> {
   const MapWrapperRoute({List<PageRouteInfo>? children})
-      : super(MapWrapperRoute.name, path: 'map', initialChildren: children);
+      : super(
+          MapWrapperRoute.name,
+          path: 'map',
+          initialChildren: children,
+        );
 
   static const String name = 'MapWrapperRoute';
 }
@@ -343,8 +518,11 @@ class MapWrapperRoute extends PageRouteInfo<void> {
 /// [EmptyRouterPage]
 class OrdersWrapperRoute extends PageRouteInfo<void> {
   const OrdersWrapperRoute({List<PageRouteInfo>? children})
-      : super(OrdersWrapperRoute.name,
-            path: 'orders', initialChildren: children);
+      : super(
+          OrdersWrapperRoute.name,
+          path: 'orders',
+          initialChildren: children,
+        );
 
   static const String name = 'OrdersWrapperRoute';
 }
@@ -353,7 +531,11 @@ class OrdersWrapperRoute extends PageRouteInfo<void> {
 /// [EmptyRouterPage]
 class AccountWrapperRoute extends PageRouteInfo<void> {
   const AccountWrapperRoute({List<PageRouteInfo>? children})
-      : super(AccountWrapperRoute.name, path: 'my', initialChildren: children);
+      : super(
+          AccountWrapperRoute.name,
+          path: 'my',
+          initialChildren: children,
+        );
 
   static const String name = 'AccountWrapperRoute';
 }
@@ -361,7 +543,11 @@ class AccountWrapperRoute extends PageRouteInfo<void> {
 /// generated route for
 /// [OverviewPage]
 class OverviewRoute extends PageRouteInfo<void> {
-  const OverviewRoute() : super(OverviewRoute.name, path: '');
+  const OverviewRoute()
+      : super(
+          OverviewRoute.name,
+          path: '',
+        );
 
   static const String name = 'OverviewRoute';
 }
@@ -369,15 +555,26 @@ class OverviewRoute extends PageRouteInfo<void> {
 /// generated route for
 /// [RestMenuPage]
 class RestMenuRoute extends PageRouteInfo<RestMenuRouteArgs> {
-  RestMenuRoute({Key? key, required String storeId})
-      : super(RestMenuRoute.name,
-            path: '', args: RestMenuRouteArgs(key: key, storeId: storeId));
+  RestMenuRoute({
+    Key? key,
+    required String storeId,
+  }) : super(
+          RestMenuRoute.name,
+          path: '',
+          args: RestMenuRouteArgs(
+            key: key,
+            storeId: storeId,
+          ),
+        );
 
   static const String name = 'RestMenuRoute';
 }
 
 class RestMenuRouteArgs {
-  const RestMenuRouteArgs({this.key, required this.storeId});
+  const RestMenuRouteArgs({
+    this.key,
+    required this.storeId,
+  });
 
   final Key? key;
 
@@ -392,15 +589,26 @@ class RestMenuRouteArgs {
 /// generated route for
 /// [CustomiseFoodPage]
 class CustomiseFoodRoute extends PageRouteInfo<CustomiseFoodRouteArgs> {
-  CustomiseFoodRoute({Key? key, required String itemId})
-      : super(CustomiseFoodRoute.name,
-            path: '', args: CustomiseFoodRouteArgs(key: key, itemId: itemId));
+  CustomiseFoodRoute({
+    Key? key,
+    required String itemId,
+  }) : super(
+          CustomiseFoodRoute.name,
+          path: '',
+          args: CustomiseFoodRouteArgs(
+            key: key,
+            itemId: itemId,
+          ),
+        );
 
   static const String name = 'CustomiseFoodRoute';
 }
 
 class CustomiseFoodRouteArgs {
-  const CustomiseFoodRouteArgs({this.key, required this.itemId});
+  const CustomiseFoodRouteArgs({
+    this.key,
+    required this.itemId,
+  });
 
   final Key? key;
 
@@ -415,7 +623,11 @@ class CustomiseFoodRouteArgs {
 /// generated route for
 /// [MapPage]
 class MapRoute extends PageRouteInfo<void> {
-  const MapRoute() : super(MapRoute.name, path: '');
+  const MapRoute()
+      : super(
+          MapRoute.name,
+          path: '',
+        );
 
   static const String name = 'MapRoute';
 }
@@ -423,7 +635,11 @@ class MapRoute extends PageRouteInfo<void> {
 /// generated route for
 /// [OrdersPage]
 class OrdersRoute extends PageRouteInfo<void> {
-  const OrdersRoute() : super(OrdersRoute.name, path: '');
+  const OrdersRoute()
+      : super(
+          OrdersRoute.name,
+          path: '',
+        );
 
   static const String name = 'OrdersRoute';
 }
@@ -431,15 +647,26 @@ class OrdersRoute extends PageRouteInfo<void> {
 /// generated route for
 /// [OrderDetailPage]
 class OrderDetailRoute extends PageRouteInfo<OrderDetailRouteArgs> {
-  OrderDetailRoute({Key? key, required String orderId})
-      : super(OrderDetailRoute.name,
-            path: '', args: OrderDetailRouteArgs(key: key, orderId: orderId));
+  OrderDetailRoute({
+    Key? key,
+    required String orderId,
+  }) : super(
+          OrderDetailRoute.name,
+          path: '',
+          args: OrderDetailRouteArgs(
+            key: key,
+            orderId: orderId,
+          ),
+        );
 
   static const String name = 'OrderDetailRoute';
 }
 
 class OrderDetailRouteArgs {
-  const OrderDetailRouteArgs({this.key, required this.orderId});
+  const OrderDetailRouteArgs({
+    this.key,
+    required this.orderId,
+  });
 
   final Key? key;
 
@@ -454,7 +681,11 @@ class OrderDetailRouteArgs {
 /// generated route for
 /// [AccountPage]
 class AccountRoute extends PageRouteInfo<void> {
-  const AccountRoute() : super(AccountRoute.name, path: '');
+  const AccountRoute()
+      : super(
+          AccountRoute.name,
+          path: '',
+        );
 
   static const String name = 'AccountRoute';
 }

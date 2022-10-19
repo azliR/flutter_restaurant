@@ -8,7 +8,7 @@ import 'package:flutter_restaurant/views/core/app_router.dart';
 import 'package:flutter_restaurant/views/core/misc/dialogs.dart';
 
 class CartPlaceOrderButton extends StatelessWidget {
-  const CartPlaceOrderButton({Key? key}) : super(key: key);
+  const CartPlaceOrderButton({super.key});
 
   Future<void> _placeOrder({
     required BuildContext context,
@@ -97,9 +97,7 @@ class CartPlaceOrderButton extends StatelessWidget {
 
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        padding: const EdgeInsets.all(16),
-        primary: colorScheme.primary,
-        onPrimary: colorScheme.onPrimary,
+        foregroundColor: colorScheme.onPrimary, padding: const EdgeInsets.all(16), backgroundColor: colorScheme.primary,
       ),
       onPressed: () async {
         _showDialog(context);

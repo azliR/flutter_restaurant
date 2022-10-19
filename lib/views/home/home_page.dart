@@ -20,7 +20,7 @@ class AdaptiveScaffoldDestination {
 }
 
 class HomePage extends StatelessWidget with AutoRouteWrapper {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({super.key});
 
   List<AdaptiveScaffoldDestination> _getDestinations(BuildContext context) {
     return HomeSection.values.map((section) {
@@ -161,12 +161,11 @@ class HomePage extends StatelessWidget with AutoRouteWrapper {
 
 class _HomeNavigationRail extends StatelessWidget {
   const _HomeNavigationRail({
-    Key? key,
     required this.extended,
     required this.selectedIndex,
     required this.onDestinationSelected,
     required this.destinations,
-  }) : super(key: key);
+  });
 
   final bool extended;
   final int selectedIndex;

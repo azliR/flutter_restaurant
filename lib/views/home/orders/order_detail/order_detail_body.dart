@@ -9,7 +9,7 @@ import 'package:flutter_restaurant/views/home/orders/order_detail/widgets/order_
 import 'package:intl/intl.dart';
 
 class OrderDetailBody extends StatelessWidget {
-  const OrderDetailBody({Key? key}) : super(key: key);
+  const OrderDetailBody({super.key});
 
   @override
   Widget build(BuildContext context) {

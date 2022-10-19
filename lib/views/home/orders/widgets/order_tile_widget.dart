@@ -12,10 +12,10 @@ import 'package:timeago/timeago.dart' as timeago;
 
 class OrderTile extends StatelessWidget {
   const OrderTile({
-    Key? key,
+    super.key,
     required this.order,
     required this.onTap,
-  }) : super(key: key);
+  });
 
   final Orders order;
   final VoidCallback onTap;

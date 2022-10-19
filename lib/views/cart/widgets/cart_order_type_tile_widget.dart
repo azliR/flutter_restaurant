@@ -7,7 +7,7 @@ import 'package:flutter_restaurant/models/enums/enums.dart';
 import 'package:flutter_restaurant/views/core/widgets/pill.dart';
 
 class CartOrderTypeTile extends StatefulWidget {
-  const CartOrderTypeTile({Key? key}) : super(key: key);
+  const CartOrderTypeTile({super.key});
 
   @override
   State<CartOrderTypeTile> createState() => _CartOrderTypeTileState();

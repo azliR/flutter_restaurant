@@ -7,12 +7,12 @@ import 'package:flutter_restaurant/views/core/widgets/nullable_network_image.dar
 
 class MapCard extends StatelessWidget {
   const MapCard({
-    Key? key,
+    super.key,
     required this.selectedIndex,
     required this.pageController,
     required this.onPageChanged,
     required this.onButtonPressed,
-  }) : super(key: key);
+  });
 
   final int selectedIndex;
   final PageController pageController;
@@ -25,19 +25,19 @@ class MapCard extends StatelessWidget {
     final textTheme = themeData.textTheme;
     final colorScheme = themeData.colorScheme;
 
-    final _isDesktop = themeData.platform == TargetPlatform.macOS ||
+    final isDesktop = themeData.platform == TargetPlatform.macOS ||
         themeData.platform == TargetPlatform.windows ||
         themeData.platform == TargetPlatform.linux;
 
-    final _cardHeight =
+    final cardHeight =
         (MediaQuery.of(context).orientation == Orientation.landscape)
-            ? (_isDesktop ? 140.0 : 110.0)
+            ? (isDesktop ? 140.0 : 110.0)
             : 130.0;
 
     return Align(
       alignment: Alignment.bottomCenter,
       child: SizedBox(
-        height: _cardHeight,
+        height: cardHeight,
         child: BlocSelector<MapCubit, MapState, List<NearbyStore>>(
           selector: (state) => state.stores,
           builder: (context, stores) {

@@ -6,10 +6,10 @@ import 'package:flutter_restaurant/views/core/widgets/nullable_network_image.dar
 
 class SpecialOfferTile extends StatelessWidget {
   const SpecialOfferTile({
-    Key? key,
+    super.key,
     required this.specialOffer,
     required this.onTap,
-  }) : super(key: key);
+  });
 
   final SpecialOffer specialOffer;
   final VoidCallback onTap;

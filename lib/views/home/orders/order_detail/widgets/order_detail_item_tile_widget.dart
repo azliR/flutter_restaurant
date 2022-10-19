@@ -3,9 +3,9 @@ import 'package:flutter_restaurant/models/order/order_detail.dart';
 
 class OrderDetailItemTile extends StatelessWidget {
   const OrderDetailItemTile({
-    Key? key,
+    super.key,
     required this.detailItem,
-  }) : super(key: key);
+  });
 
   final OrderDetail detailItem;
 

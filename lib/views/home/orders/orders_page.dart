@@ -11,7 +11,7 @@ import 'package:flutter_restaurant/views/home/orders/orders_body.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 class OrdersPage extends StatefulWidget implements AutoRouteWrapper {
-  const OrdersPage({Key? key}) : super(key: key);
+  const OrdersPage({super.key});
 
   @override
   Widget wrappedRoute(BuildContext context) {

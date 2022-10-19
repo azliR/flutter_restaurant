@@ -16,7 +16,7 @@ import 'package:flutter_restaurant/views/core/app_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class App extends StatelessWidget {
-  App({Key? key}) : super(key: key);
+  App({super.key});
 
   final _appRouter = AppRouter();
 
@@ -105,7 +105,7 @@ class App extends StatelessWidget {
               ),
             ),
             locale: state.locale,
-            localizationsDelegates: [
+            localizationsDelegates: const [
               AppLocalizations.delegate,
             ],
             supportedLocales: AppLocalizations.supportedLocales,

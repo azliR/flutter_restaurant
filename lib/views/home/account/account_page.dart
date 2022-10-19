@@ -5,7 +5,7 @@ import 'package:flutter_restaurant/views/core/widgets/unauthorised_widget.dart';
 import 'package:flutter_restaurant/views/home/account/profile_completion/profile_completion_page.dart';
 
 class AccountPage extends StatelessWidget {
-  const AccountPage({Key? key}) : super(key: key);
+  const AccountPage({super.key});
 
   @override
   Widget build(BuildContext context) {

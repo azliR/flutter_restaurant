@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_restaurant/views/core/app_router.dart';
 
 class UnauthorisedWidget extends StatelessWidget {
-  const UnauthorisedWidget({Key? key}) : super(key: key);
+  const UnauthorisedWidget({super.key});
 
   @override
   Widget build(BuildContext context) {

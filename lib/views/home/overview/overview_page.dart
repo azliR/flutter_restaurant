@@ -16,7 +16,7 @@ import 'package:flutter_restaurant/views/home/overview/widgets/nearby_store_tile
 import 'package:flutter_restaurant/views/home/overview/widgets/special_offer_tile_widget.dart';
 
 class OverviewPage extends StatefulWidget implements AutoRouteWrapper {
-  const OverviewPage({Key? key}) : super(key: key);
+  const OverviewPage({super.key});
 
   @override
   Widget wrappedRoute(BuildContext context) {
@@ -341,10 +341,9 @@ class _OverviewPageState extends State<OverviewPage> {
 
 class _HomeTitle extends StatelessWidget {
   const _HomeTitle({
-    Key? key,
     required this.title,
     required this.subtitle,
-  }) : super(key: key);
+  });
 
   final String title;
   final String subtitle;
@@ -381,7 +380,7 @@ class _HomeTitle extends StatelessWidget {
 }
 
 class _NoLocationErrorWidget extends StatelessWidget {
-  const _NoLocationErrorWidget({Key? key}) : super(key: key);
+  const _NoLocationErrorWidget();
 
   @override
   Widget build(BuildContext context) {

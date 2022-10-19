@@ -3,9 +3,9 @@ import 'package:flutter_restaurant/views/auth/widgets/login_tab_view.dart';
 
 class SignInPage extends StatefulWidget {
   const SignInPage({
-    Key? key,
+    super.key,
     this.onCompleted,
-  }) : super(key: key);
+  });
 
   final VoidCallback? onCompleted;
 

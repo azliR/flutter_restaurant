@@ -18,11 +18,6 @@ import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart' as path;
 
 class AppBlocObserver extends BlocObserver {
-  @override
-  void onChange(BlocBase bloc, Change change) {
-    super.onChange(bloc, change);
-    // log('onChange(${bloc.runtimeType}, $change)');
-  }
 
   @override
   void onError(BlocBase bloc, Object error, StackTrace stackTrace) {
@@ -32,33 +27,28 @@ class AppBlocObserver extends BlocObserver {
 }
 
 Future<void> bootstrap(FutureOr<Widget> Function() builder, String env) async {
+  final widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+
+  configureInjection(env);
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
+  FlutterError.onError = (details) {
+    log(details.exceptionAsString(), stackTrace: details.stack);
+  };
+
+  Bloc.observer = AppBlocObserver();
+  HydratedBloc.storage = await HydratedStorage.build(
+    storageDirectory: kIsWeb
+        ? HydratedStorage.webStorageDirectory
+        : await path.getApplicationSupportDirectory(),
+  );
+
   await runZonedGuarded(
-    () async {
-      await HydratedBlocOverrides.runZoned(
-        () async => runApp(await builder()),
-        blocObserver: AppBlocObserver(),
-        createStorage: () async {
-          final widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
-          FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
-
-          configureInjection(env);
-
-          await Firebase.initializeApp(
-            options: DefaultFirebaseOptions.currentPlatform,
-          );
-
-          FlutterError.onError = (details) {
-            log(details.exceptionAsString(), stackTrace: details.stack);
-          };
-
-          return HydratedStorage.build(
-            storageDirectory: kIsWeb
-                ? HydratedStorage.webStorageDirectory
-                : await path.getApplicationSupportDirectory(),
-          );
-        },
-      );
-    },
+    () async => runApp(await builder()),
     (error, stackTrace) => log(error.toString(), stackTrace: stackTrace),
   );
 }

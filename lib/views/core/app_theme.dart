@@ -213,7 +213,7 @@ class AppTheme {
     }
     return ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-        primary: primaryColor,
+        backgroundColor: primaryColor,
         elevation: 0,
         padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
         shape: const RoundedRectangleBorder(
@@ -238,8 +238,7 @@ class AppTheme {
     }
     return OutlinedButtonThemeData(
       style: OutlinedButton.styleFrom(
-        primary: color,
-        padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
+        foregroundColor: color, padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(kBorderRadius)),
         ),
@@ -273,8 +272,7 @@ class AppTheme {
     }
     return TextButtonThemeData(
       style: TextButton.styleFrom(
-        primary: color,
-        padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
+        foregroundColor: color, padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(kBorderRadius)),
         ),

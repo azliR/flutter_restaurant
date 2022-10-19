@@ -11,10 +11,10 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 class RestMenuBody extends StatefulWidget {
   const RestMenuBody({
-    Key? key,
+    super.key,
     required this.store,
     this.scrollController,
-  }) : super(key: key);
+  });
 
   final Store store;
   final ScrollController? scrollController;

@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 
 class ErrorText extends StatelessWidget {
   const ErrorText({
-    Key? key,
+    super.key,
     required this.message,
     this.error,
     this.stackTrace,
     required this.onRetry,
-  }) : super(key: key);
+  });
 
   final String message;
   final Object? error;
@@ -59,7 +59,7 @@ class ErrorText extends StatelessWidget {
 }
 
 class ErrorDialog extends StatelessWidget {
-  const ErrorDialog({Key? key, this.error, this.stackTrace}) : super(key: key);
+  const ErrorDialog({super.key, this.error, this.stackTrace});
 
   final Object? error;
   final StackTrace? stackTrace;

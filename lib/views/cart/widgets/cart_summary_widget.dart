@@ -5,7 +5,7 @@ import 'package:flutter_restaurant/l10n/l10n.dart';
 import 'package:flutter_restaurant/views/core/misc/utils.dart';
 
 class CartSummary extends StatefulWidget {
-  const CartSummary({Key? key}) : super(key: key);
+  const CartSummary({super.key});
 
   @override
   _CartSummaryState createState() => _CartSummaryState();
@@ -105,11 +105,10 @@ class _CartSummaryState extends State<CartSummary> {
 
 class _CartDetailTile extends StatelessWidget {
   const _CartDetailTile({
-    Key? key,
     required this.labelText,
     required this.value,
     this.isTotal = false,
-  }) : super(key: key);
+  });
 
   final String labelText;
   final num value;
