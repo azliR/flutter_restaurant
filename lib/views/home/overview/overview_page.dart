@@ -152,7 +152,7 @@ class _OverviewPageState extends State<OverviewPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Restaurant'),
+        title: const Text('IFood'),
         actions: [
           IconButton(
             padding: const EdgeInsets.symmetric(vertical: 16),

@@ -33,52 +33,54 @@ import 'package:injectable/injectable.dart' as _i2;
 
 const String _prod = 'prod';
 const String _dev = 'dev';
-// ignore_for_file: unnecessary_lambdas
-// ignore_for_file: lines_longer_than_80_chars
-/// initializes the registration of provided dependencies inside of [GetIt]
-_i1.GetIt $initGetIt(
-  _i1.GetIt get, {
-  String? environment,
-  _i2.EnvironmentFilter? environmentFilter,
-}) {
-  final gh = _i2.GetItHelper(
-    get,
-    environment,
-    environmentFilter,
-  );
-  final firebaseInjectableModule = _$FirebaseInjectableModule();
-  gh.lazySingleton<_i3.FirebaseAuth>(
-      () => firebaseInjectableModule.firebaseAuth,);
-  gh.lazySingleton<_i4.HomeRepository>(() => _i4.HomeRepository());
-  gh.factory<_i5.LocalInjectableModule>(
-    () => _i5.ProdModule(),
-    registerFor: {_prod},
-  );
-  gh.factory<_i5.LocalInjectableModule>(
-    () => _i5.DevModule(),
-    registerFor: {_dev},
-  );
-  gh.factory<_i6.MapCubit>(() => _i6.MapCubit(get<_i4.HomeRepository>()));
-  gh.lazySingleton<_i7.OrderRepository>(
-      () => _i7.OrderRepository(get<_i3.FirebaseAuth>()),);
-  gh.factory<_i8.OrdersCubit>(
-      () => _i8.OrdersCubit(get<_i7.OrderRepository>()),);
-  gh.factory<_i9.OverviewCubit>(
-      () => _i9.OverviewCubit(get<_i4.HomeRepository>()),);
-  gh.factory<_i10.PreferencesCubit>(() => _i10.PreferencesCubit());
-  gh.factory<_i11.RestMenuCubit>(
-      () => _i11.RestMenuCubit(get<_i4.HomeRepository>()),);
-  gh.lazySingleton<_i12.AuthRepository>(
-      () => _i12.AuthRepository(get<_i3.FirebaseAuth>()),);
-  gh.lazySingleton<_i13.CartRepository>(
-      () => _i13.CartRepository(get<_i3.FirebaseAuth>()),);
-  gh.factory<_i14.CustomiseFoodCubit>(
-      () => _i14.CustomiseFoodCubit(get<_i4.HomeRepository>()),);
-  gh.factory<_i15.OrderDetailCubit>(
-      () => _i15.OrderDetailCubit(get<_i7.OrderRepository>()),);
-  gh.factory<_i16.AuthCubit>(() => _i16.AuthCubit(get<_i12.AuthRepository>()));
-  gh.factory<_i17.CartCubit>(() => _i17.CartCubit(get<_i13.CartRepository>()));
-  return get;
+
+/// ignore_for_file: unnecessary_lambdas
+/// ignore_for_file: lines_longer_than_80_chars
+extension GetItInjectableX on _i1.GetIt {
+  /// initializes the registration of main-scope dependencies inside of [GetIt]
+  _i1.GetIt init({
+    String? environment,
+    _i2.EnvironmentFilter? environmentFilter,
+  }) {
+    final gh = _i2.GetItHelper(
+      this,
+      environment,
+      environmentFilter,
+    );
+    final firebaseInjectableModule = _$FirebaseInjectableModule();
+    gh.lazySingleton<_i3.FirebaseAuth>(
+        () => firebaseInjectableModule.firebaseAuth);
+    gh.lazySingleton<_i4.HomeRepository>(() => _i4.HomeRepository());
+    gh.factory<_i5.LocalInjectableModule>(
+      () => _i5.ProdModule(),
+      registerFor: {_prod},
+    );
+    gh.factory<_i5.LocalInjectableModule>(
+      () => _i5.DevModule(),
+      registerFor: {_dev},
+    );
+    gh.factory<_i6.MapCubit>(() => _i6.MapCubit(gh<_i4.HomeRepository>()));
+    gh.lazySingleton<_i7.OrderRepository>(
+        () => _i7.OrderRepository(gh<_i3.FirebaseAuth>()));
+    gh.factory<_i8.OrdersCubit>(
+        () => _i8.OrdersCubit(gh<_i7.OrderRepository>()));
+    gh.factory<_i9.OverviewCubit>(
+        () => _i9.OverviewCubit(gh<_i4.HomeRepository>()));
+    gh.factory<_i10.PreferencesCubit>(() => _i10.PreferencesCubit());
+    gh.factory<_i11.RestMenuCubit>(
+        () => _i11.RestMenuCubit(gh<_i4.HomeRepository>()));
+    gh.lazySingleton<_i12.AuthRepository>(
+        () => _i12.AuthRepository(gh<_i3.FirebaseAuth>()));
+    gh.lazySingleton<_i13.CartRepository>(
+        () => _i13.CartRepository(gh<_i3.FirebaseAuth>()));
+    gh.factory<_i14.CustomiseFoodCubit>(
+        () => _i14.CustomiseFoodCubit(gh<_i4.HomeRepository>()));
+    gh.factory<_i15.OrderDetailCubit>(
+        () => _i15.OrderDetailCubit(gh<_i7.OrderRepository>()));
+    gh.factory<_i16.AuthCubit>(() => _i16.AuthCubit(gh<_i12.AuthRepository>()));
+    gh.factory<_i17.CartCubit>(() => _i17.CartCubit(gh<_i13.CartRepository>()));
+    return this;
+  }
 }
 
 class _$FirebaseInjectableModule extends _i18.FirebaseInjectableModule {}

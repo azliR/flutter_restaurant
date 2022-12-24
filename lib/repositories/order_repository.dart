@@ -9,7 +9,7 @@ import 'package:flutter_restaurant/models/order/order.dart';
 import 'package:flutter_restaurant/models/order/orders.dart';
 import 'package:flutter_restaurant/repositories/core/local_injectable_module.dart';
 import 'package:http/http.dart' as http;
-import 'package:injectable/injectable.dart';
+import 'package:injectable/injectable.dart' hide Order;
 
 @lazySingleton
 class OrderRepository {

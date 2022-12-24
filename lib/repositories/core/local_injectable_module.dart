@@ -13,13 +13,13 @@ abstract class LocalInjectableModule {
 @Injectable(as: LocalInjectableModule)
 class ProdModule extends LocalInjectableModule {
   @override
-  String schemeApi = 'https';
+  String schemeApi = 'http';
 
   @override
-  String hostApi = 'azlir-restaurant-api.herokuapp.com';
+  String hostApi = '54.254.139.132';
 
   @override
-  int portApi = 443;
+  int portApi = 8080;
 }
 
 @dev
@@ -30,7 +30,7 @@ class DevModule extends LocalInjectableModule {
 
   @override
   String hostApi =
-      (!kIsWeb && Platform.isAndroid) ? '192.168.0.142' : 'localhost';
+      (!kIsWeb && Platform.isAndroid) ? '192.168.117.188' : 'localhost';
 
   @override
   int portApi = 8080;

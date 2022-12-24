@@ -10,7 +10,7 @@ import 'package:flutter_restaurant/models/enums/enums.dart';
 import 'package:flutter_restaurant/models/order/order.dart';
 import 'package:flutter_restaurant/repositories/cart_repository.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
-import 'package:injectable/injectable.dart';
+import 'package:injectable/injectable.dart' hide Order;
 import 'package:kt_dart/kt.dart';
 
 part 'cart_state.dart';

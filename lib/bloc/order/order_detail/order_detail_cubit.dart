@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_restaurant/bloc/core/failure.dart';
 import 'package:flutter_restaurant/models/order/order.dart';
 import 'package:flutter_restaurant/repositories/order_repository.dart';
-import 'package:injectable/injectable.dart';
+import 'package:injectable/injectable.dart' hide Order;
 
 part 'order_detail_state.dart';
 
